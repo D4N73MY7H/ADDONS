@@ -1,0 +1,110 @@
+<odoo>
+    <data>
+
+        <record id="action_employee_monthly_cost" model="ir.actions.report">
+            <field name="name">Employee Monthly Cost Report</field>
+            <field name="model">employee.monthly.cost.wizard</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">hr_contracts_cp.employee_monthly_cost_report</field>
+            <field name="report_file">hr_contracts_cp.employee_monthly_cost_report</field>
+            <field name="binding_type">report</field>
+        </record>
+
+        <template id="employee_monthly_cost_report">
+            <t t-call="web.html_container">
+                <div class="header">
+                    <div class="container">
+                        <div class="row" style="margin-top: 10px;">
+                            <img src="/hr_contracts_cp/static/description/logo.png" alt="Company Logo" style="max-height: 70px; max-width: 260px; object-fit: cover;"/>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="article o_report_layout_standart">
+                    <t t-out="0"/>
+                    <div class="container">
+                        <center style="margin: 50px 0;">
+                             <h3>
+                                <b>RAPORT KOSTO PAGE MUJORE</b>
+                             </h3>
+                        </center>
+
+
+                        <table class="table table-condensed table-bordered" style="width: 100%; table-layout: auto;margin-top: 50px;">
+                            <thead style="background-color: #875A7B; color: white;">
+                                <tr>
+                                    <th style="text-align:center;font-weight:normal;vertical-align:middle;width: auto;">Nr.</th>
+                                    <th style="text-align:center;font-weight:normal;vertical-align:middle;width: auto;">Emer Mbiemer</th>
+                                    <th style="text-align:center;font-weight:normal;vertical-align:middle;width: auto;">Departamenti</th>
+                                    <th style="text-align:center;font-weight:normal;vertical-align:middle;width: auto;">Paga bruto</th>
+                                    <th style="text-align:center;font-weight:normal;vertical-align:middle;width: auto;">Paga neto</th>
+                                    <th style="text-align:center;font-weight:normal;vertical-align:middle;width: auto;">Total sigurime</th>
+                                    <th style="text-align:center;font-weight:normal;vertical-align:middle;width: auto;">TAP</th>
+                                    <th style="text-align:center;font-weight:normal;vertical-align:middle;width: auto;">Kosto mujore punedhenesi</th>
+                                </tr>
+                            </thead>
+                            <t t-set="emp_count" t-value="1"/>
+                            <t t-foreach="employees" t-as="employee">
+                                <tr>
+                                    <td style="text-align:center;font-weight:normal;vertical-align:middle;">
+                                        <span t-esc="emp_count"/>
+                                    </td>
+                                    <td style="text-align:center;font-weight:normal;vertical-align:middle;">
+                                        <span t-esc="employee['employee_name']"/>
+                                    </td>
+                                    <td style="text-align:center;font-weight:normal;vertical-align:middle;">
+                                        <span t-esc="employee['department_name']"/>
+                                    </td>
+                                    <td style="text-align:center;font-weight:normal;vertical-align:middle;">
+                                        <span t-esc="employee['wage']"/>
+                                    </td>
+                                    <td style="text-align:center;font-weight:normal;vertical-align:middle;">
+                                        <span t-esc="employee['net']"/>
+                                    </td>
+                                    <td style="text-align:center;font-weight:normal;vertical-align:middle;">
+                                        <span t-esc="employee['sigurime']"/>
+                                    </td>
+                                    <td style="text-align:center;font-weight:normal;vertical-align:middle;">
+                                        <span t-esc="employee['tap']"/>
+                                    </td>
+                                    <td style="text-align:center;font-weight:normal;vertical-align:middle;">
+                                        <span t-esc="employee['employee_monthly_cost']"/>
+                                    </td>
+                                </tr>
+                                <t t-set="emp_count" t-value=" emp_count + 1"/>
+                            </t>
+                            <tfoot style="display: table-row-group;">
+                                <tr>
+                                  <th style="text-align:center;vertical-align:middle;font-size: 18px;font-weight: 800;">Totali</th>
+                                    <th/><th/>
+                                     <th style="text-align:center;vertical-align:middle;font-size: 18px;font-weight: 800;"><span t-att-style="style" t-esc="employees[-1]['total_wage']"/></th>
+                                    <th style="text-align:center;vertical-align:middle;font-size: 18px;font-weight: 800;"><span t-att-style="style" t-esc="employees[-1]['total_net']"/></th>
+                                     <th style="text-align:center;vertical-align:middle;font-size: 18px;font-weight: 800;"><span t-att-style="style" t-esc="employees[-1]['total_sigurime']"/></th>
+                                    <th style="text-align:center;vertical-align:middle;font-size: 18px;font-weight: 800;"><span t-att-style="style" t-esc="employees[-1]['total_tap']"/></th>
+                                    <th style="text-align:center;vertical-align:middle;font-size: 18px;font-weight: 800;"><span t-att-style="style" t-esc="employees[-1]['total_employee_monthly_cost']"/></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <p style="page-break-after:always;"></p>
+                    </div>
+                </div>
+
+                <div class="footer o_standard_footer">
+                    <div class="container" style="border-top: 2px solid black; width: 100%;">
+                        <div class="row" style="margin-top:10px;">
+                            <div class="col-3">
+                                <p>Gjeneruar nga <img src="/hr_contracts_cp/static/description/logo.png" alt="Company Logo" style="max-height: 35px; max-width: 130px; object-fit: cover;"/></p>
+                            </div>
+                            <div class="col-7"/>
+                            <div class="col-2">
+                                <p>Date printimi <span style="font-style: italic;" t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y')"/></p>
+                                <p class="page" style="background-color: #875A7B; color:white; width: 15%; text-align: center;"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

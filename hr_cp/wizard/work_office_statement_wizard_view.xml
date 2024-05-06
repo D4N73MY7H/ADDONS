@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_work_office_statement_wizard" model="ir.ui.view">
+            <field name="name">work.office.statement.wizard.form</field>
+            <field name="model">work.office.statement.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="company_id" required="1" create="0" edit="0"/>
+                        <field name="department_id" create="0"/>
+                        <field name="report_type"/>
+                    </group>
+                    <footer>
+                        <button name="work_office_statement" string="Print" type="object" class="btn btn-primary" icon='fa-print'/>
+                        <button string="Cancel" special="cancel" class="btn btn-danger"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_work_office_statement_wizard" model="ir.actions.act_window">
+            <field name="name">Work Office Statement</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">work.office.statement.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_work_office_statement_wizard"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="menu_work_office_statement_wizard"
+                  name="Work Office Statement"
+                  parent="hr.hr_menu_hr_reports"
+                  action="action_work_office_statement_wizard"
+                  sequence="101"
+                  />
+    </data>
+</odoo>

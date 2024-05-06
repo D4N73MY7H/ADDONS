@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_payslip_payment,hr.payslip.payment,model_hr_payslip_payment,,1,1,1,1
+access_payslip_payment_line,payslip.payment.line,model_payslip_payment_line,,1,1,1,1
+access_fiscal_year_closure,fiscal.year.closure,model_fiscal_year_closure,,1,1,1,1

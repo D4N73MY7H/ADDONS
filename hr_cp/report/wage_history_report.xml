@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+    <record id="action_wage_history" model="ir.actions.report">
+            <field name="name">Historiku i pages</field>
+            <field name="model">wizard.wage.history</field>
+            <field name="report_type">qweb-html</field>
+            <field name="report_name">hr_cp.wage_history_report</field>
+            <field name="report_file">hr_cp.wage_history_report</field>
+            <field name="binding_type">report</field>
+    </record>
+
+    <template id="wage_history_report">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <t t-if="o and 'company_id' in o">
+                    <t t-set="company" t-value="o.company_id"/>
+                </t>
+                <t t-if="not o or not 'company_id' in o">
+                    <t t-set="company" t-value="res_company"/>
+                </t>
+                <div class="header">
+                    <div class="col-xs-6 col-xs-offset-3 text-center" >
+                        <div class="article">
+                            <h3><strong>RAPORT I HISTORIKUT TE PAGES</strong></h3>
+                        </div>
+                    </div>
+                </div>
+                <br/><br/><br/><br/>
+
+                <div class="page">
+                    <t t-foreach="get_lines" t-as="t">
+                        <p>
+                            <strong>Punonjësi: <span t-att-style="style" t-esc="t['employee']"/></strong>
+                        </p>
+                        <p>
+                            <strong>Departamenti: <span t-att-style="style" t-esc="t['department']"/></strong>
+                        </p>
+                        <table class="table table-condensed table-bordered">
+                            <thead style="background-color:#875A7B;color:white;text-align:center">
+                                <tr>
+                                    <th>Nr.</th>
+                                    <th>Pershkrimi i kontrates</th>
+                                    <th>Periudha</th>
+                                    <th>Paga Neto</th>
+                                    <th>Diferencë mujore Neto</th>
+                                    <th>Të ardhurat neto totale (Pagë neto + Bonus mujor neto)</th>
+                                    <th>Ndryshimi ne vlere</th>
+                                    <th>Ndryshimi ne %</th>
+                                    <th>Data e ndryshimit të pagës</th>
+                                    <th>Bonus</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="t['contracts']" t-as="c">
+                                    <tr>
+                                        <td><span t-att-style="style" t-esc="c['nr_rendor']"/></td>
+                                        <td><span t-att-style="style" t-esc="c['description']"/></td>
+                                        <td><span t-att-style="style" t-esc="c['period']"/></td>
+                                        <td><span t-att-style="style" t-esc="c['net']"/></td>
+                                        <td><span t-att-style="style" t-esc="c['bonus']"/></td>
+                                        <td><span t-att-style="style" t-esc="c['paga']"/></td>
+                                        <td><span t-att-style="style" t-esc="c['diff_value']"/></td>
+                                        <td><span t-att-style="style" t-esc="c['diff_percent']"/></td>
+                                        <td><span t-att-style="style" t-esc="c['change_date']"/></td>
+                                        <td><span t-att-style="style" t-esc="c['period_bonus']"/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                            <tfoot style="display:table-row-group;">
+                                    <tr>
+                                        <th style="text-align:center" colspan="2">Totali:</th>
+                                        <th/>
+                                        <th><span t-att-style="style" t-esc="t['tot_net']"/></th>
+                                        <th><span t-att-style="style" t-esc="t['monthly_bonus']"/></th>
+                                        <th><span t-att-style="style" t-esc="t['tot_paga']"/></th>
+                                        <th><span t-att-style="style" t-esc="t['tot_diff_value']"/></th>
+                                        <th><span t-att-style="style" t-esc="t['tot_diff_percent']"/></th>
+                                        <th/>
+                                        <th><span t-att-style="style" t-esc="t['total_bonus']"/></th>
+                                    </tr>
+                            </tfoot>
+                        </table>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+    </data>
+</odoo>

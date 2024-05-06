@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_customs_manager,account.customs.manager,model_account_customs,account_customs_group_manager,1,1,1,1
+access_account_customs_line_manager,account.customs.line.manager,model_account_customs_line,account_customs_group_manager,1,1,1,1
+access_account_customs_tax_line_manager,account.customs.tax.line.manager,model_account_customs_tax,account_customs_group_manager,1,1,1,1

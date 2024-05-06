@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+    <!-- Action to open the Customs list -->
+        <record id="action_account_customs_import" model="ir.actions.act_window">
+            <field name="name">Customs Import</field>
+            <field name="res_model">account.customs</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('move_type', '=', 'import')]</field>
+            <field name="context">{'default_move_type': 'import'}</field>
+        </record>
+
+        <!-- Action to open the Customs list -->
+        <record id="action_account_customs_export" model="ir.actions.act_window">
+            <field name="name">Customs Export</field>
+            <field name="res_model">account.customs</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('move_type', '=', 'export')]</field>
+            <field name="context">{'default_move_type': 'export'}</field>
+        </record>
+
+        <!-- Menu item to open the Customs list -->
+        <menuitem id="customs_menu"
+                  name="Customs"
+                  parent="account_accountant.menu_accounting"
+        >
+            <menuitem id="customs_menu_import"
+                      name="Customs Import"
+                      action="action_account_customs_import"
+            />
+            <menuitem id="customs_menu_export"
+                      name="Customs Export"
+                      action="action_account_customs_export"
+            />
+        </menuitem>
+
+
+    </data>
+</odoo>

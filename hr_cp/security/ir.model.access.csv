@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+hr_cp.access_employee_wage_certificate_wizard,access_employee_wage_certificate_wizard,hr_cp.model_employee_wage_certificate_wizard,base.group_user,1,1,1,1
+hr_cp.access_work_office_statement_wizard,access_work_office_statement_wizard,hr_cp.model_work_office_statement_wizard,base.group_user,1,1,1,1
+
+hr_cp.access_employee_origin,access_employee_origin,hr_cp.model_employee_origin,base.group_user,1,1,1,1
+hr_cp.wizard_wage_structure_report,access_wizard_wage_structure_report,hr_cp.model_wizard_wage_structure_report,base.group_user,1,1,1,1
+hr_cp.wizard_wage_history,access_wizard_wage_history,hr_cp.model_wizard_wage_history,base.group_user,1,1,1,1
+access_annual_bonus_hr_manager,annual.bonus.hr.manager,hr_cp.model_annual_bonus,,1,1,1,1
+access_masat_disiplinore_hr_manager,masat.disiplinore.hr.manager,hr_cp.model_masat_disiplinore,,1,1,1,1
+access_masat_disiplinore_type_hr_manager,masat.disiplinor.type.hr.manager,hr_cp.model_disciplin_measures_type,,1,1,1,1
+access_offense_type_hr_manager,offense.type.hr.manager,hr_cp.model_offense_type,,1,1,1,1

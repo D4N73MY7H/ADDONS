@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+            <record id="hr_payslip_inherit_form_cp" model="ir.ui.view">
+                <field name="name">hr.payslip.inherit.form.cp</field>
+                <field name="model">hr.payslip</field>
+                <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//field[@name='work_entry_type_id']" position="replace">
+                        <field name="work_entry_type_id" force_save="1"/>
+                    </xpath>
+                    <xpath expr="//field[@name='number_of_days']" position="replace">
+                        <field name="number_of_days" sum="Total Working Days" force_save="1" readonly="0"/>
+                    </xpath>
+                    <xpath expr="//field[@name='number_of_hours']" position="replace">
+                        <field name="number_of_hours" sum="Total Working Hours" force_save="1" readonly="0"/>
+                    </xpath>
+                    <xpath expr="//field[@name='amount']" position="replace">
+                        <field name="amount" sum="Total Amount"  readonly='0' force_save="1"/>
+                    </xpath>
+                </field>
+            </record>
+     </data>
+</odoo>

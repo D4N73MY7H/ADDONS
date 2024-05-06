@@ -1,0 +1,118 @@
+<odoo>
+    <data>
+
+        <record id="action_work_office_statement" model="ir.actions.report">
+            <field name="name">Raport per Deklarimin ne Zyren e Punes</field>
+            <field name="model">work.office.statement.wizard</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">hr_cp.report_work_office_statement</field>
+            <field name="report_file">hr_cp.report_work_office_statement</field>
+            <field name="binding_type">report</field>
+        </record>
+
+        <template id="report_work_office_statement">
+            <t t-call="web.html_container">
+                <div class="header">
+                    <div class="container">
+                        <div class="row" style="margin-top: 10px; margin-left: auto; margin-right: auto; width: 100%;">
+                            <img src="/hr_cp/static/description/logo.png" alt="Company Logo" style="max-height: 70px; max-width: 260px"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="article o_report_layout_standart">
+                    <t t-out="0"/>
+                    <div class="container">
+                        <center style="margin: 50px 0;">
+                             <h3>
+                                <b>DREJTORIA RAJONALE E SHËRBIMIT KOMBËTAR TË PUNËSIMIT TIRANË</b>
+                             </h3>
+                        </center>
+
+
+                        <p>SUBJEKTI DEKLARUES: <t t-esc="company_name"/></p>
+                        <p>NIPT: <t t-esc="vat"/></p>
+                        <p>Adresa e subjektit: <t t-esc="company_address"/></p>
+                        <p>Emri i punedhenesit: <t t-esc="employer_name"/></p>
+                        <p>Tel: <t t-esc="company_mobile"/> Email: <t t-esc="company_email"/></p>
+                        <p>Data e fillimit te aktivitetit: <t t-esc="company_start_date"/></p>
+                        <p>Personi kontaktues: <t t-esc="hr_name"/> Tel: <t t-esc="hr_mobile"/> Email: <t t-esc="hr_work_mail"/></p>
+                        <b>Totali punonjes: <t t-esc="total_employees"/> Totali Femra: <t t-esc="female_employees"/></b>
+
+
+                        <table class="table table-condensed table-bordered" style="width: 100%; table-layout: auto;margin-top: 50px;">
+                            <thead>
+                                <tr>
+                                    <th style="text-align:top;font-weight:normal;vertical-align:middle;width: auto;">Nr.</th>
+                                    <th style="text-align:center;font-weight:normal;vertical-align:middle;width: auto;">Nr. i Siguracionit</th>
+                                    <th style="text-align:center;font-weight:normal;vertical-align:middle;width: auto;">Emer Atesi Mbiemer</th>
+                                    <th style="text-align:center;font-weight:normal;vertical-align:middle;width: auto;">Datelindje dd/mm/yyyy</th>
+                                    <th style="text-align:center;font-weight:normal;vertical-align:middle;width: auto;">Arsimi</th>
+                                    <th style="text-align:center;font-weight:normal;vertical-align:middle;width: auto;">Profesioni qe ushtron</th>
+                                    <th style="text-align:center;font-weight:normal;vertical-align:middle;width: auto;">Data e fillimit te punes ne firme</th>
+                                    <th style="text-align:center;font-weight:normal;vertical-align:middle;width: auto;">Adresa e sakte e banimit</th>
+                                    <th style="text-align:center;font-weight:normal;width: 1%;">Nga vjen personi kur vjen ne pune:
+                                        Papunesia,Pag/Papunesie,Nd/ekonomike,
+                                        Per here te pare,Te tjera</th>
+                                </tr>
+                            </thead>
+                            <t t-if="len(employees) > 0">
+                                <t t-set="emp_count" t-value="1"/>
+                            </t>
+                            <t t-foreach="employees" t-as="rec">
+                                <tr>
+                                    <td style="text-align:center;font-weight:normal;vertical-align:middle;">
+                                        <span t-esc="emp_count"/>
+                                    </td>
+                                    <td style="text-align:center;font-weight:normal;vertical-align:middle;">
+                                        <span t-esc="rec.get('employee_ssnid')"/>
+                                    </td>
+                                    <td style="text-align:center;font-weight:normal;vertical-align:middle;">
+                                        <span t-esc="rec.get('employee_name')"/>
+                                    </td>
+                                    <td style="text-align:center;font-weight:normal;vertical-align:middle;">
+                                        <span t-esc="rec.get('employee_birthday')"/>
+                                    </td>
+                                    <td style="text-align:center;font-weight:normal;vertical-align:middle;">
+                                        <span t-esc="rec.get('employee_education')"/>
+                                    </td>
+                                    <td style="text-align:center;font-weight:normal;vertical-align:middle;">
+                                        <span t-esc="rec.get('employee_job')"/>
+                                    </td>
+                                    <td style="text-align:center;font-weight:normal;vertical-align:middle;">
+                                        <span t-esc="rec.get('employee_start_date')"/>
+                                    </td>
+                                    <td style="text-align:center;font-weight:normal;vertical-align:middle;">
+                                        <span t-esc="rec.get('employee_address')"/>
+                                    </td>
+                                    <td style="text-align:center;font-weight:normal;vertical-align:middle;">
+                                        <span t-esc="rec.get('employee_origin')"/>
+                                    </td>
+                                </tr>
+                                <t t-set="emp_count" t-value=" emp_count + 1"/>
+                            </t>
+                        </table>
+                        <p style="page-break-after:always;"></p>
+
+                    </div>
+                </div>
+
+                <div class="footer o_standard_footer">
+                    <div class="footer o_standard_footer">
+                        <div class="container" style="border-top: 2px solid black; width: 100%;">
+                            <div class="row" style="margin-top:10px;">
+                                <div class="col-3">
+                                    <p>Gjeneruar nga <img src="/hr_cp/static/description/logo.png" alt="Company Logo" style="max-height: 35px; max-width: 130px; object-fit: cover;"/></p>
+                                </div>
+                                <div class="col-7"/>
+                                <div class="col-2">
+                                    <p>Date printimi <span style="font-style: italic;" t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y')"/></p>
+                                    <p class="page" style="background-color: #875A7B; color:white; width: 15%; text-align: center;"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

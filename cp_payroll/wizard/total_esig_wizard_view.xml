@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+            <record model='ir.ui.view' id='wizard_esig_total_report_form_view'>
+            <field name="name">wizard.esig_total.report.form</field>
+            <field name="model">wizard.esig_total.report</field>
+            <field name="arch" type="xml">
+                <form string="Esig 025 Summary">
+                        <group>
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                        </group>
+                    <footer>
+                        <button name="employee_esig_report" type="object" default_focus="1"
+                                string="Print" class="oe_highlight"
+                                icon='fa-print'/>
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model='ir.actions.act_window' id='wizard_esig_total_report_act'>
+            <field name="name">Esig 025 Summary</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wizard.esig_total.report</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_esig_total_report_form_view"/>
+            <field name="target">new</field>
+        </record>
+
+
+        <menuitem name="Esig 025 Summary"
+                  parent="hr_payroll.menu_hr_payroll_report"
+                  id="esig_total2_report"
+                  action="wizard_esig_total_report_act"
+                  sequence="6"
+                  groups="hr_payroll.group_hr_payroll_manager"/>
+    </data>
+</odoo>

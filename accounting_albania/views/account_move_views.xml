@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_move_form_cp_inherit" model="ir.ui.view">
+            <field name="name">account.move.form.cp.inherit</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//group[@id='header_right_group']/div[@class='d-flex']" position="after">
+                    <field name="secondary_currency_rate" invisible= "move_type == 'entry' " readonly="1" force_save="1"/>
+                 </xpath>
+                <xpath expr="//form/sheet/notebook/page[@id='invoice_tab']/group/group/field[@name='narration']" position="replace">
+                 </xpath>
+                   <xpath expr="//form/sheet/notebook/page[@id='invoice_tab']/group/group" position="inside">
+                    <group class="oe_subtotal_footer" invisible="move_type not in ('out_invoice', 'out_refund', 'in_invoice', 'in_refund', 'out_receipt', 'in_receipt') or payment_state == 'invoicing_legacy'">
+                        <field style="border-top: none;" name="taxes_totals" class="o_list_monetary" widget="account-taxes-totals-field" nolabel="1" colspan="2"/>
+                        <field name="converted_amount_residual" class="oe_subtotal_footer_separator" invisible="state == 'draft'"/>
+                    </group>
+                 </xpath>
+
+                <xpath expr="//field[@name='payment_reference']" position='after'>
+                    <field name="create_inventory_move"/>
+                    <field name="location_id" invisible="create_inventory_move != True"/>
+                </xpath>
+                <xpath expr="//field[@name='invoice_vendor_bill_id']" position='after'>
+                     <field name="customs_id" invisible="move_type == 'entry'"/>
+                </xpath>
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <button type="object" name="show_inventory_move" class="oe_stat_button" icon="fa-truck" invisible="delivery_count == 0">
+                        <div class="o_field_widget o_stat_info">
+                            <field name="delivery_count"/>
+                            <span class="o_stat_text">Delivery</span>
+                        </div>
+                    </button>
+                    <button type="object" name="show_customs_document" class="oe_stat_button" icon="fa-user-secret" invisible="customs_count == 0">
+                        <div class="o_field_widget o_stat_info">
+                            <field name="customs_count"/>
+                            <span class="o_stat_text">Customs</span>
+                        </div>
+                    </button>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

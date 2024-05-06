@@ -1,0 +1,10 @@
+<odoo>
+  <data>
+    <!-- Customs Manager Group -->
+    <record id="account_customs_group_manager" model="res.groups">
+      <field name="name">Customs Manager</field>
+      <field name="category_id" ref="base.module_category_accounting"/>
+    </record>
+
+  </data>
+</odoo>

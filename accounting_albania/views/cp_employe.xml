@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+            <record id="view_employee_form_inherited_cp15" model="ir.ui.view">
+            <field name="name">hr.employee.inherited</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//field[@name='tz']" position="after">
+                     <group string="Accounts">
+                       <field name="llogarit_kontabel" string="Llogarite"/>  <!-- Sherben per pagesen e pagave -->
+                     </group>
+                 </xpath>
+              </field>
+            </record>
+    </data>
+</odoo>

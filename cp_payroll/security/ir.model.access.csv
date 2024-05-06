@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_wizard_esig_report,wizard.esig.report.hr.manager,cp_payroll.model_wizard_esig_report,hr.group_hr_manager,1,1,1,1
+access_wizard_esig_total_report,wizard.esig.total.report.hr.manager,cp_payroll.model_wizard_esig_total_report,hr.group_hr_manager,1,1,1,1

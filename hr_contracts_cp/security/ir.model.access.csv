@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+hr_contracts_cp.access_employee_monthly_cost_wizard,access_employee_monthly_cost_wizard,hr_contracts_cp.model_employee_monthly_cost_wizard,base.group_user,1,1,1,1

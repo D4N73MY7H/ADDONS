@@ -1,0 +1,127 @@
+<odoo>
+    <data>
+
+        <record id="view_customs_form" model="ir.ui.view">
+            <field name="name">account.customs.form</field>
+            <field name="model">account.customs</field>
+            <field name="arch" type="xml">
+                <form string="Customs">
+                    <header>
+                        <!-- Buttons will go here -->
+                        <button name="action_confirm" string="Confirm" class="oe_highlight"
+                                type="object"
+                                invisible="state != 'draft' or move_type == 'entry'"/>
+                        <button name="action_create_landed_cost" string="Create Landed Cost" class="oe_highlight"
+                                type="object"
+                                invisible="state != 'done' or move_type == 'entry'"/>
+                        <button name="action_cancel" string="Cancel"
+                                type="object"
+                                invisible="state != 'done'"/>
+                        <button name="action_draft" string="Return to Draft"
+                                type="object"
+                                invisible="state != 'cancel'"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <!-- Content goes here -->
+                        <div name="button_box" class="oe_button_box">
+                            <button type="object" name="show_inventory_move" class="oe_stat_button" icon="fa-truck" invisible="delivery_count == 0">
+                                <div class="o_field_widget o_stat_info">
+                                    <field name="delivery_count"/>
+                                    <span class="o_stat_text">Delivery</span>
+                                </div>
+                            </button>
+
+                            <button type="object" name="show_landed_costs" class="oe_stat_button" icon="fa-money" invisible="landed_costs_count == 0">
+                                <div class="o_field_widget o_stat_info">
+                                    <field name="landed_costs_count"/>
+                                    <span class="o_stat_text">Landed Costs</span>
+                                </div>
+                            </button>
+
+                            <button type="object" name="show_journal_entries" class="oe_stat_button" icon="fa-bars" invisible="journal_entries_count == 0">
+                                <div class="o_field_widget o_stat_info">
+                                    <field name="journal_entries_count"/>
+                                    <span class="o_stat_text">Journal Entries</span>
+                                </div>
+                            </button>
+                        </div>
+                        <!-- Customs draft header -->
+                        <h1 invisible="state != 'draft' or name != '/'">
+                            <span>Draft</span>
+                        </h1>
+                        <!-- Number -->
+                        <h1 class="mt0" invisible="name == '/'">
+                            <field name="name" readonly="state != 'draft'" placeholder="Customs Number"/>
+                        </h1>
+
+                        <group>
+                            <!-- Left Group -->
+                            <group id="header_left_group">
+                                <field name="partner_id"/>
+                                <field name="date"/>
+                                <field name="date_in_report"/>
+                                <field name="post_in_journals"/>
+                                <field name="create_account_move"/>
+                            </group>
+
+                            <!-- Right Group -->
+                            <group id="header_right_group">
+                                <field name="move_type" invisible="1"/>
+                                <field name="location_id"/>
+                                <field name="location_destination_id"/>
+                                <field name="related_invoice_id"/>
+                            </group>
+                        </group>
+
+                        <!-- Customs Lines Group -->
+                        <notebook>
+                            <page id="customs_lines_tab" string="Customs Lines">
+                                <field name="customs_line_ids" readonly="state != 'draft'" >
+                                    <tree editable="bottom" string="Customs Items">
+
+                                        <field name="sequence" widget="handle" />
+
+                                        <!-- Customs line fields -->
+                                        <field name="partner_id_line"/>
+                                        <field name="product_id_line"/>
+                                        <field name="location_id_line"/>
+                                        <field name="location_destination_id_line"/>
+                                        <field name="unit_price_line" sum="Total"/>
+                                        <field name="product_qty_line"/>
+                                        <field name="total_line" sum="Total"/>
+                                    </tree>
+                                </field>
+                            </page>
+
+                            <page id="customs_tax_tab" string="Tax">
+                                <field name="tax_line_ids" readonly="state != 'draft'">
+                                    <tree editable="bottom" string="Tax Items">
+                                        <!-- Customs line fields -->
+                                        <field name="move_type_line" invisible="1"/>
+                                        <field name="product_id" domain="[('landed_cost_ok', '=', True)]"
+                                               context="{'default_landed_cost_ok': True}"/>
+                                        <field name="tax_id"/>
+                                        <field name="account_id"/>
+                                        <field name="journal_id"/>
+                                        <field name="import_type" invisible="move_type_line != 'import'" />
+                                        <field name="export_type" invisible="move_type_line != 'export'"/>
+                                        <field name="base_price" sum="Total"/>
+                                        <field name="tax_amount" sum="Total"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+
+                    </sheet>
+
+                    <!-- Attachment preview -->
+                    <div class="o_attachment_preview"
+                         invisible="state != 'draft'"/>
+                </form>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

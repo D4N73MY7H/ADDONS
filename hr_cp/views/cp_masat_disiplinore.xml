@@ -1,0 +1,93 @@
+<odoo>
+    <data>
+
+<record id="masat_disiplinore_form_view" model="ir.ui.view">
+            <field name="name">masat_disiplinore.form</field>
+            <field name="model">masat.disiplinore</field>
+            <field name="arch" type="xml">
+                <form string="Disciplinary Measures">
+                    <sheet>
+                        <h2>Punonjes</h2>
+                        <field name="employee_id"></field>
+                        <group>
+                            <field name="measures_type_id" style="width:40%%"/>
+                        </group>
+                        <notebook>
+                            <page string="Information">
+                                <group>
+                                    <group>
+                                        <field name="measure_start_date"/>
+                                        <field name="measure_end_date"/>
+                                    </group>
+                                    <group>
+                                        <field name="measure_offense_type_id"/>
+                                        <field name="measure_duration"/><br/>
+                                    </group>
+
+                                    <h2>Description of Infraction</h2><br/>
+                                    <field name="violation_description" nolabel="1" width="100%%"/>
+                                    <h2>Plan for Improvement</h2>
+                                    <field name="plan_for_improvment" nolabel="1" width="100%%"/>
+                                    <h2>Decision Taken</h2>
+                                    <field name="decision_made" nolabel="1" width="100%%"/>
+                                    <h2>Consequences of Further Infractions</h2>
+                                    <field name="consequences_further_violations" nolabel="1" width="100%%"/>
+                                </group>
+                            </page>
+                        </notebook>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="masat_disiplinore_tree_view" model="ir.ui.view">
+            <field name="name">masat_disiplinore.tree</field>
+            <field name="model">masat.disiplinore</field>
+            <field name="arch" type="xml">
+                <tree string="Disciplinary Measures">
+                    <field name="employee_id"/>
+                    <field name="measures_type_id"/>
+                    <field name="measure_offense_type_id"/>
+                    <field name="measure_start_date"/>
+                    <field name="measure_end_date"/>
+
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="masat_disiplinore_act_window" model="ir.actions.act_window">
+            <field name="name">Disciplinary Measures</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">masat.disiplinore</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="masat_disiplinore_form_view"/>
+        </record>
+
+                <menuitem name="Disciplinary Measures" id="Masat_disiplinore_menu" parent="hr.menu_hr_root" groups="hr.group_hr_manager"
+                  action="masat_disiplinore_act_window"/>
+
+        <record id="view_employee_form_inherited_cp2" model="ir.ui.view">
+            <field name="name">hr.employee.inherited</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+             <xpath expr="//page[@name='personal_information']" position="after">
+                    <page name="masat_disiplinore" string="Disciplinary Measures">
+                        <field name="employee_measures" readonly="True">
+                            <tree string="">
+                                <field name="measures_type_id" width="0"/>
+                                <field name="measure_offense_type_id" width="0"/>
+                                <field name="measure_start_date" width="0"/>
+                                <field name="measure_end_date" width="0"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

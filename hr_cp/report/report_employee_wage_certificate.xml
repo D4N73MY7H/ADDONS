@@ -1,0 +1,84 @@
+<odoo>
+    <data>
+
+        <record id="action_employee_wage_certificate" model="ir.actions.report">
+            <field name="name">Employee Wage Certificate Report</field>
+            <field name="model">employee.wage.certificate.wizard</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">hr_cp.employee_wage_certificate_report</field>
+            <field name="report_file">hr_cp.employee_wage_certificate_report</field>
+            <field name="binding_type">report</field>
+        </record>
+
+        <template id="hr_cp.employee_wage_certificate_report">
+            <t t-call="web.html_container">
+                <div class="header">
+                    <div class="container" style="font-family: Arial, Helvetica, sans-serif;">
+                        <div class="row" style="margin: 10px 55px; width: 100%;">
+                            <img src="/hr_cp/static/description/logo.png" alt="Company Logo" style="max-height: 52.5px; max-width: 195px; object-fit: cover;"/>
+                        </div>
+                        <div class="row" style="margin: 50px 55px; font-size: 27px; width: 100%;">
+                            <div class="col-3">
+                                <p>Nr._____ Prot.</p>
+                            </div>
+                            <div class="col-6"/>
+                            <div class="col-3">
+                                <p>Data: <t t-esc="report_date"/></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="article o_report_layout_standart">
+                    <t t-out="0"/>
+                    <div class="container" style="font-family: Arial, Helvetica, sans-serif;">
+                        <div class="row" style="margin-bottom:80px; margin-left: auto; margin-right: auto; width: 100%;">
+                            <div style="padding-left:70px;padding-right:70px;">
+                                <center>
+                                    <h1 style="margin:100px auto;color: black;"><strong>VERTETIM PAGE</strong></h1>
+                                </center>
+                                <p style="font-size: 27px;">
+                                    Vërtetojmë se Z/Zj. <span t-esc="employee_name"/> është i/e punësuar me kohë të plotë pranë shoqërisë
+                                    <span t-esc="company_name"/>, prej datës <span t-esc="date_start"/> deri më <span t-esc="date_end"/>, ne pozicionin “<span t-esc="employee_job"/>”, me pagë bruto: <span t-esc="wage"/> (<span t-esc="wage_translated"/>) lekë dhe page neto: <span t-esc="net"/>
+                                    (<span t-esc="net_translated"/>) lekë.
+                                </p>
+                                <p style="font-size: 27px;">
+                                    Punonjësit/es i paguhen rregullisht kontributet e sigurimeve shoqërore dhe shëndetësore sipas
+                                    Numrit të Sigurimit Shoqëror <span t-esc="employee_ssnid"/>.
+                                </p>
+                                <p style="font-size: 27px;">
+                                    Ky vërtetim lëshohet me kërkesë të Z/Znj. <span t-esc="employee_name"/> per efekt dokumenti.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-top:80px;">
+                            <div class="col-8"/>
+                            <div class="col-4" style="font-size: 27px; width: 100%;">
+                                <p style="margin-bottom: 1px;"><b><span t-esc="hr_responsible_name"/></b></p>
+                                <p style="margin-bottom: 1px;">Menaxhere e Burimeve Njerëzore</p>
+                                <p style="margin-bottom: 1px;">Tel: <span t-esc="hr_responsible_mobile"/></p>
+                                <p>Email: <span t-esc="hr_responsible_email"/></p>
+                                <p>__________________________</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer o_standard_footer">
+                    <div class="container" style="font-family: Arial, Helvetica, sans-serif;">
+                        <div class="row" style="margin: 0 auto; width: 100%;">
+                            <div style="text-align: center; font-size: 27px; margin: 0 auto; width: 100%">
+                                <p style="margin-bottom: 1px;"><span t-esc="company_name"/> | NIPT: <span t-esc="company_vat"/> | email: <span t-esc="company_email"/></p>
+                                <p style="margin-bottom: 1px;"><span t-esc="company_address"/> |  DUNS: <span t-esc="company_duns"/> | tel/fax: <span t-esc="company_phone"/> • cel: <span t-esc="company_mobile"/></p>
+                                <p><span t-esc="company_name" style="color:orange;"/> | <span t-esc="company_standard"/></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </t>
+        </template>
+
+    </data>
+</odoo>

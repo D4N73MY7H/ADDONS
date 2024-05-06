@@ -1,0 +1,222 @@
+<odoo>
+    <data>
+
+        <record id="action_esig" model="ir.actions.report">
+            <field name="name">Raporti 025 Esig</field>
+            <field name="model">hr.payslip</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">cp_payroll.report_esig</field>
+            <field name="paperformat_id" ref="cp_payroll.paperformat_hr"/>
+            <field name="report_file">cp_payroll.report_esig</field>
+        </record>
+
+
+        <template id="report_esig">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+                    <t t-if="o and 'company_id' in o">
+                    <t t-set="company" t-value="o.company_id"/>
+                    </t>
+                    <t t-if="not o or not 'company_id' in o">
+                        <t t-set="company" t-value="res_company"/>
+                    </t>
+                    <center>
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col">
+                                    <h4 class="text-center">
+                                        <strong>DEKLARATA "Listëpagesa e Kontributeve të Sigurimeve Shoqërore, Shëndetësore dhe Tatimit mbi të Ardhurat nga Punësimi"</strong>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </center>
+                        <t t-foreach="get_header" t-as="p">
+                            <div class="row">
+                                <div class="col-auto col-6">
+                                     1) NIPT: <span t-att-style="style" t-esc="p['vat']"/>
+                                     2) Emri i Tatimpaguesit <span t-att-style="style" t-esc="p['employer_name']"/>
+                                </div>
+                                <div class="col-auto col-6">
+                                    3) Periudha Tatimore Viti: <span t-att-style="style" t-esc="p['viti']"/>
+                                    4) Muaji <span t-att-style="style" t-esc="p['month']"/>
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-auto col-3 " style="text-align:left">
+                                    5) Periodiciteti i deklarimit ______________
+                                </div>
+                                <div class="col-auto col-3 " style="text-align:left">
+                                    6) Adresa Kryesore _______________
+                                </div>
+                                <div class="col-auto col-3" style="text-align:left">
+                                    7) Veprimtaria kryesore _______________
+                                </div>
+                                <div class="col-auto col-3 " style="text-align:left">
+                                    8) Veprimtaria e degës/njësisë _____________
+                                </div>
+                            </div>
+                            <div class="row">
+                                 <div class="col-6 text-right">
+                                    <span style="border:2px solid black;width:20px;height:20px"> </span> PA Veprimtari________
+                                </div>
+                            </div>
+                        </t>
+                    <div class="page">
+                        <div t-foreach="get_payslip_run" t-as="p">
+                            <table class="table table-condensed table-bordered">
+                                <t t-set="tot_gross" t-value="0"/>
+                                <t t-set="nr_employee" t-value="0"/>
+                                <t t-set="tot_bkb" t-value="0"/>
+                                <t t-set="tot_ewsi" t-value="0"/>
+                                <t t-set="tot_ewhc" t-value="0"/>
+                                <t t-set="tot_esi" t-value="0"/>
+                                <t t-set="tot_ehc" t-value="0"/>
+                                <t t-set="tot_paga_tap" t-value="0"/>
+                                <t t-set="tot_tap" t-value="0"/>
+                                <t t-set="tot_net" t-value="0"/>
+                                <t t-set="all_employee" t-value="0"/>
+                                <t t-set="all_employeer" t-value="0"/>
+                                <t t-set="all_cost" t-value="0"/>
+                                <t t-set="all_sigurime" t-value="0"/>
+                                <t t-set="tot_ndalesa" t-value="0"/>
+                                <t t-set="tot_kontribute_tap" t-value="0"/>
+                                <t t-set="tot_nr_employee" t-value="0"/>
+                                <t t-set="tot_bhi" t-value="0"/>
+
+                                <thead style="text-align:center;">
+                                    <tr>
+                                        <th rowspan="5">Nr.</th>
+                                        <th rowspan="5"><span style="display: inline-block;-webkit-transform: rotate(-90deg);">9) Nr. personal</span></th>
+                                        <th rowspan="5">10) Emër Mbiemër</th>
+                                        <th rowspan="5" style="height:200px">11) Detyra, funksioni, profesioni apo puna që ka kryer</th>
+                                        <th rowspan="5" style=""><div style="writing-mode: tb-rl;">12) Numri i kategorisë të të punësuarve për kontributet</div> </th>
+                                        <th rowspan="5" style="">13) Ditë kalendarike pa punuar gjatë muajit (e drejta për përfitime shoqërore)</th>
+                                        <th rowspan="5" style="">14) Ditë kalendarike të punuara te subjekti gjatë muajit</th>
+                                        <th rowspan="5">15) Paga Bruto gjithsej në Lekë(përjashtuar shumën e lekëve që zbriten nga paga dhe derdhjet në fondet e pensionit vullnetar si kontribut i punëdhënësit)</th>
+                                        <th rowspan="5">16) Paga Bruto mbi të cilën llogariten kontributet</th>
+                                    </tr>
+                                    <tr style="">
+                                        <th colspan="7" style="text-align:center;">Kontribute për sigurimet shoqërore në Lekë</th>
+                                        <th rowspan="5" style="text-align:center;">24) Paga Bruto mbi të cilën llogariten kontributet e sigurimit shëndetësor</th>
+                                        <th rowspan="5" style="text-align:center;">25) Kontribute për sigurimet shëndetësore gjithsej</th>
+                                        <th rowspan="5" style="text-align:center;">26) Tatimi mbi të ardhurat nga punësimi (TAP) gjithsej në Lekë</th>
+                                        <th rowspan="5" style="text-align:center;">27) Shënime</th>
+                                    </tr>
+                                    <tr style="">
+                                        <th colspan="6" style="text-align:center">Nga këto:</th>
+                                        <th rowspan="3" style="text-align:center">23) Totali i Kontributeve për sigurimet shoqërore (19+22)</th>
+                                    </tr>
+                                    <tr style="">
+                                        <th colspan="3" style="text-align:center">Kontribute për sigurime shoqërore të detyrueshme</th>
+                                        <th colspan="3" style="text-align:center">Kontribute suplementare</th>
+                                    </tr>
+
+                                    <tr>
+                                        <th>17) Punëdhënësi</th>
+                                        <th>18) Punëmarrësi</th>
+                                        <th>19) Gjithsej (17+18)</th>
+                                        <th>20) Punëdhënësi</th>
+                                        <th>21) Punëmarrësi</th>
+                                        <th>22) Gjithsej (20+21)</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <t t-foreach="get_lines" t-as="t">
+                                        <tr>
+                                            <td><span t-att-style="style" t-esc="t['id']"/></td>
+                                            <td><span t-att-style="style" t-esc="t['ssnid']"/></td>
+                                            <td><span t-att-style="style" t-esc="t['name']"/></td>
+                                            <td><span t-att-style="style" t-esc="t['job_id']"/></td>
+                                            <td/>
+                                            <td><span t-att-style="style" t-esc="'{0:,.2f}'.format(float(t['dite_papunuar']))"/></td>
+                                            <td><span t-att-style="style" t-esc="'{0:,.2f}'.format(float(t['dite_pune']))"/></td>
+
+                                            <td><span t-att-style="style" t-esc="'{0:,.0f}'.format(float(t['gross']))"/></td>
+                                            <td><span t-att-style="style" t-esc="'{0:,.0f}'.format(float(t['bkb']))"/></td>
+                                            <!--Kolona 17, 18, 19-->
+                                            <td><span t-att-style="style" t-esc="'{0:,.0f}'.format(float(t['esiit']))"/></td>
+                                            <td><span t-att-style="style" t-esc="'{0:,.0f}'.format(float(t['ewsi']))"/></td>
+                                            <td><span t-att-style="style" t-esc="'{0:,.0f}'.format(float(t['tot_employeer']))"/></td>
+                                            <!--Kolona 20, 21, 22-->
+                                            <td><span t-att-style="style" t-esc="'{0:,.0f}'.format(float(0))"/></td>
+                                            <td><span t-att-style="style" t-esc="'{0:,.0f}'.format(float(0))"/></td>
+                                            <td><span t-att-style="style" t-esc="'{0:,.0f}'.format(float(0))"/></td>
+
+                                            <td><span t-att-style="style" t-esc="'{0:,.0f}'.format(float(t['tot_sigurime']))"/></td><!--23-->
+                                            <td><span t-att-style="style" t-esc="'{0:,.0f}'.format(float(t['bhi']))"/></td><!--24-->
+                                            <td><span t-att-style="style" t-esc="'{0:,.0f}'.format(float(t['tot_shendensore']))"/></td><!--25-->
+                                            <td><span t-att-style="style" t-esc="'{0:,.0f}'.format(float(t['tap']))"/></td><!--26-->
+                                            <td/>
+                                        </tr>
+                                        <t t-set="tot_gross" t-value="tot_gross+t['gross']"/>
+                                        <t t-set="tot_bkb" t-value="tot_bkb+t['bkb']"/>
+                                        <t t-set="tot_ewsi" t-value="tot_ewsi+t['ewsi']"/>
+                                        <t t-set="tot_ewhc" t-value="tot_ewhc+t['ewhc']"/>
+                                        <t t-set="tot_esiit" t-value="t['esiit']"/>
+                                        <t t-set="tot_ehc" t-value="tot_ehc+t['ehc']"/>
+                                        <t t-set="tot_paga_tap" t-value="tot_paga_tap+t['paga_tap']"/>
+                                        <t t-set="tot_tap" t-value="tot_tap+t['tap']"/>
+                                        <t t-set="tot_net" t-value="tot_net+t['net']"/>
+                                        <t t-set="all_employee" t-value="all_employee+t['tot_employee']"/>
+                                        <t t-set="all_employeer" t-value="all_employeer+t['tot_employeer']"/>
+                                        <t t-set="all_cost" t-value="all_cost+t['tot_shendensore']"/>
+                                        <t t-set="all_sigurime" t-value="all_sigurime+t['tot_sigurime']"/>
+                                        <t t-set="tot_ndalesa" t-value="tot_ndalesa+t['ndalesa']"/>
+                                        <t t-set="tot_kontribute_tap" t-value="tot_kontribute_tap+t['tap']+t['tot_shendensore']+t['tot_sigurime']"/>
+                                        <t t-set="nr_employee" t-value="t['id']"/>
+                                        <t t-set="tot_bhi" t-value="tot_bhi+t['bhi']"/>
+                                    </t>
+                                </tbody>
+
+                                <tfoot style="display: table-row-group;">
+                                    <tr>
+                                        <th style="background:black;color:white;text-align:center" colspan="7">Totali i Listëpagesave</th>
+                                        <th><span t-att-style="style" t-esc="'{0:,.0f}'.format(float(tot_gross))"/> </th>
+                                        <th><span t-att-style="style" t-esc="'{0:,.0f}'.format(float(tot_bkb))"/> </th>
+                                        <th><span t-att-style="style" t-esc="'{0:,.0f}'.format(float(tot_esiit))"/> </th>
+                                        <th><span t-att-style="style" t-esc="'{0:,.0f}'.format(float(tot_ewsi))"/></th>
+                                        <th><span t-att-style="style" t-esc="'{0:,.0f}'.format(float(all_employeer))"/></th>
+                                        <th><span t-att-style="style" t-esc="'{0:,.0f}'.format(float(0))"/></th>
+                                        <th><span t-att-style="style" t-esc="'{0:,.0f}'.format(float(0))"/></th>
+                                        <th><span t-att-style="style" t-esc="'{0:,.0f}'.format(float(0))"/></th>
+                                        <th><span t-att-style="style" t-esc="'{0:,.0f}'.format(float(all_sigurime))"/></th>
+                                        <th><span t-att-style="style" t-esc="'{0:,.0f}'.format(float(tot_bhi))"/></th>
+                                        <th><span t-att-style="style" t-esc="'{0:,.0f}'.format(float(all_cost))"/></th>
+                                        <th><span t-att-style="style" t-esc="'{0:,.0f}'.format(float(tot_tap))"/></th>
+                                        <th style="background:black"></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                             <div style="border:1px solid black;overflow:hidden;">
+                                <div class="col-xs-12 mb4" style="text-align:center;font-weight:bolder;font-size:22px;">
+                                    <p>Deklaroj se të dhënat e kësaj Listëpagese përmbajnë:</p>
+                                </div>
+                                <div class="col-xs-12 mb4" style="text-align:center;font-weight:bolder;font-size:22px;">
+                                    <p>28) Punonjës që duhet të paguajnë sigurimet shoqërore
+                                        <span style='margin:5px;border:1px solid black;margin-left:100px;width:20px;padding:5px;' t-esc="nr_employee"></span> persona</p>
+                                </div>
+                                <div class="col-xs-12 mb4" style="text-align:center;font-weight:bolder;font-size:22px;">
+                                    <p>29) Shuma totale për kontributet dhe TAP për t'u paguar (23+25+26)
+                                        <span style='margin:5px;border:1px solid black;margin-left:100px;width:20px;padding:5px;' t-esc="tot_kontribute_tap"></span>
+                                      Lekë
+                                    </p>
+                                </div>
+                                <div class="col-xs-12 mb4" style="text-align:center;font-weight:bolder;font-size:22px;">
+                                    <p>30) Përfaqësuesi i personit juridik (Administratori/Administratorët)</p>
+                                    <br></br><br></br>
+                                </div>
+                                <div class="col-xs-12 mb4" style="text-align:center;font-weight:bolder;font-size:22px;">
+                                    <p>31) Deklaruesi (Administratori ose Personi i Autorizuar për deklarimin)/Personi Fizik (i Autorizuari)</p>
+                                    <br></br><br></br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

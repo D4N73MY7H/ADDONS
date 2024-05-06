@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model='ir.ui.view' id='wizard_wage_structure_form_view'>
+            <field name="name">wizard.wage.structure.report.form</field>
+            <field name="model">wizard.wage_structure.report</field>
+            <field name="arch" type="xml">
+                <form string="Raporti i struktures se pages">
+                    <group>
+                        <group>
+                            <field name="year" required="1"/>
+                            <field name="month"/>
+                        </group>
+                        <group>
+                            <field name="department_id" options="{'no_create': True}" domain="[('id', 'in', department_ids)]"/>
+                            <field name="employee_id"/>
+                            <field name="department_ids" invisible="1"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="wage_structure_report" type="object" default_focus="1"
+                                string="Print" class="oe_highlight"
+                                icon='fa-print'/>
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model='ir.actions.act_window' id='wizard_wage_structure_report_action'>
+            <field name="name">Raporti i struktures se pages</field>
+            <field name="res_model">wizard.wage_structure.report</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_wage_structure_form_view"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="menu_strukture_page_wizard"
+          name="Stuktura e pages"
+          parent="hr.hr_menu_hr_reports"
+          action="wizard_wage_structure_report_action"
+          sequence="100"/>
+    </data>
+</odoo>

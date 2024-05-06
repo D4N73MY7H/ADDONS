@@ -1,0 +1,46 @@
+<odoo>
+    <data>
+            <record id="hr_contract_form_inherit_cp" model="ir.ui.view">
+                    <field name="name">hr.contract.view.form.inherit</field>
+                    <field name="model">hr.contract</field>
+                    <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+                    <field name="arch" type="xml">
+                        <field name="hr_responsible_id" position="after">
+                            <field name="contract_id_last" domain="[('employee_id','=',employee_id)]" string="Last Contract"/>
+                        </field>
+                    </field>
+             </record>
+
+        <record id="view_employee_form_inherited_cp" model="ir.ui.view">
+            <field name="name">hr.employee.inherited</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+             <xpath expr="//page[@name='personal_information']" position="after">
+                    <page name="annual_bonus" string="Annual Bonuses">
+                        <field name="annual_bonus_ids" nolabel="1">
+                            <tree editable="top">
+                                <field name="month" width="0"/>
+                                <field name="year" width="0"/>
+                                <field name="value" width="0"/>
+                                <field name="value_gross" width="0"/>
+                                <field name="description" width="0"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="hr_contract_view_form_inherit">
+            <field name="name">hr.contract.inherited</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+               <xpath expr="//page[@name='information']/group/group/field[@name='nr_mesatar_oreve']" position="after">
+                    <field name='bonus' string="Bonus"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

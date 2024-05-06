@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="cp_hr_payroll_view_form_inherit" model="ir.ui.view">
+            <field name="name">hr.payroll.structure.form</field>
+            <field name="model">hr.payroll.structure</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_employee_grade_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='country_id']" position="after">
+                    <field name="avarage_days"/>
+                    <field name="max_wage"/>
+                    <field name="min_wage"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

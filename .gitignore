@@ -1,0 +1,49 @@
+# Odoo
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.py~
+
+
+# PostgreSQL
+*.sql
+
+# Web assets
+web/static/lib/
+
+# Node.js
+node_modules/
+
+# Python
+*.pyc
+*.pyo
+*.pyd
+*.db
+
+# Editor directories and files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Database
+dbfilter=^%h$
+
+# Translations
+*.pot
+*.po
+*.mo
+
+# Logs and backups
+*.log
+*.bak
+*.backup
+*.sql
+
+# SaaS
+instance/
+.saas-credentials

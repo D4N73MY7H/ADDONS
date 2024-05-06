@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+
+    <record id="view_account_journal_form_cp" model="ir.ui.view">
+        <field name="name">account.journal.inherit</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">
+
+            <field name = "default_account_type" position="after">
+                <label for="default_account_id" string="Bank Account" invisible="type != 'closure'"/> <!-- Sherben per fiscal year closure -->
+            </field>
+            <field name="currency_id" position="after">
+                <field name="sequence_id"/> <!-- Sherben per pagesen e pagave-->
+                <field name="closure_acc_id" invisible="type != 'closure'"/> <!-- Sherben per fiscal year closure -->
+            </field>
+        </field>
+    </record>
+
+
+     <record id="view_hr_payslip_payment_tree" model="ir.ui.view">
+            <field name="name">hr.payslip.payment.tree</field>
+            <field name="model">hr.payslip.payment</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Payslip Payments">
+                    <field name="name"/>
+                     <field name="company_id" groups="base.group_multi_company" widget="selection"/>
+                    <field name="date"/>
+                    <field name="payslip_run_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+
+
+
+     <record id="view_hr_payslip_payment_form" model="ir.ui.view">
+            <field name="name">hr.payslip.payment.form</field>
+            <field name="model">hr.payslip.payment</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Payslip">
+                    <header>
+                        <button string="Cancel" class="btn-primary" name="cancel_payment" type='object' invisible="state != 'done'" context="{'force_delete': True}"/>
+                        <button string="Set to Draft" class="btn-primary" name="set_draft" type="object" invisible="state != 'cancel'"/>
+                        <button string="Confirm" class="btn-primary" name="confirm_payment" type="object" invisible="state != 'draft'"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft" statusbar_colors='{"draft":"blue"}'/>
+                    </header>
+                    <group col="6">
+                        <group>
+                            <field name="name" readonly="state != 'draft'"/>
+                            <field name="payslip_run_id" readonly="state != 'draft'"/>
+                        </group>
+                        <group>
+                        </group>
+                        <group>
+                            <field name="bank_journal_id" domain="[('type','in',['bank','cash'])]" readonly="state != 'draft'"/>
+                        </group>
+                        <group>
+                            <field name="date" readonly="state != 'draft'"/>
+                        </group>
+                        <group>
+                            <field name="company_id" readonly="state != 'draft'" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook colspan="4">
+                        <page string="Payslips">
+                            <field name="payment_line_ids" colspan="4" nolabel="1"  readonly="state in ['done','cancel']">
+                                <tree string="Payslips" editable="top">
+                                    <field name="name" column_invisible="True"/>
+                                    <field name="payslip_id" domain="[('payslip_run_id','=',parent.payslip_run_id)]" />
+                                    <field name="account_id" />
+                                    <field name="bank_journal_id" domain="[('type','in',('bank','cash'))]"/>
+                                    <field name="net_amount" />
+                                    <field name="remaining_amount"  />
+                                    <field name="payment_amount" sum="Total"/>
+                                </tree>
+                                <form>
+                                    <field name="name" column_invisible="True"/>
+                                    <field name="payslip_id" column_invisible="True"/>
+                                    <field name="bank_journal_id" domain="[('type','in',('bank','cash'))]"/>
+                                    <field name="net_amount" />
+                                    <field name="remaining_amount" />
+                                    <field name="payment_amount"/>
+                                </form>
+                            </field>>
+                        </page>
+                        <page string="Move Entries" invisible="state == 'draft'">
+                                <field name="move_line_ids" colspan="4" nolabel="1" readonly="state in ['done','cancel']">
+                            </field>
+                        </page>
+                    </notebook>
+                </form>
+
+            </field>
+     </record>
+
+        <record id="action_view_hr_payslip_payment_form" model="ir.actions.act_window">
+            <field name="name">Payslip Payments</field>
+            <field name="res_model">hr.payslip.payment</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+     <menuitem id="bank_cash_transaction_menu"
+              name="Bank and Cash" sequence="20"
+              parent="account_accountant.menu_accounting"/>
+
+    <menuitem action="action_view_hr_payslip_payment_form" id="menu_pagesat_e_pagave" parent="accounting_albania.bank_cash_transaction_menu" name="Pagesat e pagave" sequence="300"/>
+
+
+
+</odoo>
