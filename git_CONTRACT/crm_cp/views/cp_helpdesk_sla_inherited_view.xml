@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="company_contract_helpdesk_sla_form_inherit" model="ir.ui.view">
+            <field name="name">helpdesk.sla.form.inherit</field>
+            <field name="model">helpdesk.sla</field>
+            <field name="inherit_id" ref="helpdesk.helpdesk_sla_view_form"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='stage_id']" position="replace">
+                    <field name="stage_id" string="Reach Stage" domain="[('team_ids', '=', team_id), ('id', 'not in', exclude_stage_ids)]" context="{'default_team_ids': team_id and [(6, 0, [team_id])]}"/>
+                </xpath>
+                <xpath expr="//field[@name='priority']/ancestor::group/group" position="after">
+                    <group>
+                        <separator colspan="2" string="Low Priority" class="mt32"/>
+                        <group>
+                            <field name="lp_response_time"/>
+                            <field name="lp_resolve_time"/>
+                        </group>
+                        <group>
+                            <field name="lp_response_unit"/>
+                            <field name="lp_resolve_unit"/>
+                        </group>
+
+                       <separator colspan="2" string="Medium Priority" class="mt32"/>
+                        <group>
+                            <field name="mp_response_time"/>
+                            <field name="mp_resolve_time"/>
+                        </group>
+                        <group>
+                            <field name="mp_response_unit"/>
+                            <field name="mp_resolve_unit"/>
+                        </group>
+
+                       <separator colspan="2" string="High Priority" class="mt32"/>
+                        <group>
+                            <field name="hp_response_time"/>
+                            <field name="hp_resolve_time"/>
+                        </group>
+                        <group>
+                            <field name="hp_response_unit"/>
+                            <field name="hp_resolve_unit"/>
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

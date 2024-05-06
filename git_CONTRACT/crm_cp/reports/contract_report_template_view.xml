@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+<!--  ###########################################    PAPER FORMAT Templates   ##############################################################  -->
+
+        <!--        BUSINESS paper format Template -->
+        <record id="paperformat_dynamic_report_business_contract" model="report.paperformat">
+        <field name="name">Business Contract Report</field>
+        <field name="default" eval="True"/>
+        <field name="disable_shrinking" eval="False"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">0</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="dpi">96</field>
+    </record>
+
+        <!--        GOVERNMENT paper format Template -->
+    <record id="paperformat_dynamic_report_government_contract" model="report.paperformat">
+        <field name="name">Government Contract Report</field>
+        <field name="default" eval="True"/>
+        <field name="disable_shrinking" eval="False"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">0</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="dpi">96</field>
+    </record>
+
+    <!--        SALES paper format Template -->
+    <record id="paperformat_dynamic_report_sales_contract" model="report.paperformat">
+        <field name="name">Sales Contract Report</field>
+        <field name="default" eval="True"/>
+        <field name="disable_shrinking" eval="False"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">0</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="dpi">96</field>
+    </record>
+
+    <!--        PURCHASE paper format Template -->
+    <record id="paperformat_dynamic_report_purchase_contract" model="report.paperformat">
+        <field name="name">Purchase Contract Report</field>
+        <field name="default" eval="True"/>
+        <field name="disable_shrinking" eval="False"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">0</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="dpi">96</field>
+    </record>
+
+    <!--        CATEGORY paper format Template -->
+    <record id="paperformat_dynamic_report_categories_contract" model="report.paperformat">
+        <field name="name">Categories Contract Report</field>
+        <field name="default" eval="True"/>
+        <field name="disable_shrinking" eval="False"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">0</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="dpi">96</field>
+    </record>
+
+    <!--        PERFORMANCE paper format Template -->
+    <record id="paperformat_dynamic_report_performance_contract" model="report.paperformat">
+        <field name="name">Performance Contract Report</field>
+        <field name="default" eval="True"/>
+        <field name="disable_shrinking" eval="False"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">0</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="dpi">96</field>
+    </record>
+
+<!--  ###########################################    REPORT ACTIONS    ##############################################################  -->
+
+        <!--        BUSINESS Template Report Action-->
+        <record id="action_dynamic_report_business_contract_report" model="ir.actions.report">
+            <field name="name">Business Contract Report</field>
+            <field name="model">cp.company_contract</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">crm_cp.dynamic_report_business_contract_report</field>
+            <field name="report_file">crm_cp.dynamic_report_business_contract_report</field>
+            <field name="binding_model_id" ref="model_cp_company_contract"/>
+            <field name="paperformat_id" ref="paperformat_dynamic_report_business_contract"/>
+        </record>
+
+        <!--        GOVERNMENT Template Report Action-->
+        <record id="action_dynamic_report_government_contract_report" model="ir.actions.report">
+            <field name="name">Government Contract Report</field>
+            <field name="model">cp.company_contract</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">crm_cp.dynamic_report_government_contract_report</field>
+            <field name="report_file">crm_cp.dynamic_report_government_contract_report</field>
+            <field name="binding_model_id" ref="model_cp_company_contract"/>
+            <field name="paperformat_id" ref="paperformat_dynamic_report_government_contract"/>
+        </record>
+
+        <!--        SALES Template Report Action-->
+        <record id="action_dynamic_report_sales_contract_report" model="ir.actions.report">
+            <field name="name">Sales Contract Report</field>
+            <field name="model">cp.company_contract</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">crm_cp.dynamic_report_sales_contract_report</field>
+            <field name="report_file">crm_cp.dynamic_report_sales_contract_report</field>
+            <field name="binding_model_id" ref="model_cp_company_contract"/>
+            <field name="paperformat_id" ref="paperformat_dynamic_report_sales_contract"/>
+        </record>
+
+        <!--        PURCHASE Template Report Action-->
+        <record id="action_dynamic_report_purchase_contract_report" model="ir.actions.report">
+            <field name="name">Purchase Contract Report</field>
+            <field name="model">cp.company_contract</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">crm_cp.dynamic_report_purchase_contract_report</field>
+            <field name="report_file">crm_cp.dynamic_report_purchase_contract_report</field>
+            <field name="binding_model_id" ref="model_cp_company_contract"/>
+            <field name="paperformat_id" ref="paperformat_dynamic_report_purchase_contract"/>
+        </record>
+
+        <!--        CATEGORY Template Report Action-->
+        <record id="action_dynamic_report_categories_contract_report" model="ir.actions.report">
+            <field name="name">Categories Contract Report</field>
+            <field name="model">cp.company_contract</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">crm_cp.dynamic_report_categories_contract_report</field>
+            <field name="report_file">crm_cp.dynamic_report_categories_contract_report</field>
+            <field name="binding_model_id" ref="model_cp_company_contract"/>
+            <field name="paperformat_id" ref="paperformat_dynamic_report_categories_contract"/>
+        </record>
+
+        <!--        PERFORMANCE Template Report Action-->
+        <record id="action_dynamic_report_performance_contract_report" model="ir.actions.report">
+            <field name="name">Performance Contract Report</field>
+            <field name="model">cp.company_contract</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">crm_cp.dynamic_report_performance_contract_report</field>
+            <field name="report_file">crm_cp.dynamic_report_performance_contract_report</field>
+            <field name="binding_model_id" ref="model_cp_company_contract"/>
+            <field name="paperformat_id" ref="paperformat_dynamic_report_performance_contract"/>
+        </record>
+
+<!--  ###########################################    TEMPLATES    ##############################################################  -->
+
+        <!--        BUSINESS Template -->
+        <template id="dynamic_report_business_contract_report">
+            <t t-set="data_report_landscape" t-value="True"/>
+            <t t-call="web.external_layout">
+            <t t-call="web.html_container">
+                <div class="page">
+                <h3 t-esc="n"></h3>
+                <h3>Business Contracts Report</h3>
+                <br/>
+                <div>
+                    <table class="table table-condensed table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Partner</th>
+                                <th>Amount Lek excluding TVSH</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="docs" t-as="o">
+                                <tr>
+                                    <td>
+                                        <span t-esc="o.name"></span>
+                                    </td>
+                                    <td>
+                                        <span t-esc="o.partner_id.name"></span>
+                                    </td>
+                                    <td>
+                                        <span t-esc="o.amount_no_tvsh_lek"></span>
+                                    </td>
+                                    <td>
+                                        <span t-esc="o.start_date"></span>
+                                    </td>
+                                    <td>
+                                        <span t-esc="o.end_date"></span>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+                </t>
+            </t>
+        </template>
+
+        <!--        GOVERNMENT Template -->
+        <template id="dynamic_report_government_contract_report">
+            <t t-set="data_report_landscape" t-value="True"/>
+            <t t-call="web.external_layout">
+            <t t-call="web.html_container">
+                <div class="page">
+                <h3 t-esc="n"></h3>
+                <h3>Government Contracts Report</h3>
+                <br/>
+                <div>
+                    <table class="table table-condensed table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Partner</th>
+                                <th>Amount Lek excluding TVSH</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="docs" t-as="o">
+                                <tr>
+                                    <td>
+                                        <span t-esc="o.name"></span>
+                                    </td>
+                                    <td>
+                                        <span t-esc="o.partner_id.name"></span>
+                                    </td>
+                                    <td>
+                                        <span t-esc="o.amount_no_tvsh_lek"></span>
+                                    </td>
+                                    <td>
+                                        <span t-esc="o.start_date"></span>
+                                    </td>
+                                    <td>
+                                        <span t-esc="o.end_date"></span>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+                </t>
+            </t>
+        </template>
+
+        <!--        SALES Template -->
+        <template id="dynamic_report_sales_contract_report">
+            <t t-set="data_report_landscape" t-value="True"/>
+<!--            <t t-set="full_width" t-value="True"/>-->
+            <t t-call="web.external_layout">
+            <t t-call="web.html_container">
+                <div class="page">
+                <h3 t-esc="n"></h3>
+                <h3>Sales Contracts Report</h3>
+                <br/>
+                <div>
+                    <table class="table table-condensed table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Partner</th>
+                                <th>Amount Lek excluding TVSH</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="docs" t-as="o">
+                                <tr>
+                                    <td>
+                                        <span t-esc="o.name"></span>
+                                    </td>
+                                    <td>
+                                        <span t-esc="o.partner_id.name"></span>
+                                    </td>
+                                    <td>
+                                        <span t-esc="o.amount_no_tvsh_lek"></span>
+                                    </td>
+                                    <td>
+                                        <span t-esc="o.start_date"></span>
+                                    </td>
+                                    <td>
+                                        <span t-esc="o.end_date"></span>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+                </t>
+            </t>
+        </template>
+
+        <!--        PURCHASE Template -->
+        <template id="dynamic_report_purchase_contract_report">
+            <t t-set="data_report_landscape" t-value="True"/>
+<!--            <t t-set="full_width" t-value="True"/>-->
+            <t t-call="web.external_layout">
+            <t t-call="web.html_container">
+                <div class="page">
+                <h3 t-esc="n"></h3>
+                <h3>Purchase Contracts Report</h3>
+                <br/>
+                <div>
+                    <table class="table table-condensed table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Partner</th>
+                                <th>Amount Lek excluding TVSH</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="docs" t-as="o">
+                                <tr>
+                                    <td>
+                                        <span t-esc="o.name"></span>
+                                    </td>
+                                    <td>
+                                        <span t-esc="o.partner_id.name"></span>
+                                    </td>
+                                    <td>
+                                        <span t-esc="o.amount_no_tvsh_lek"></span>
+                                    </td>
+                                    <td>
+                                        <span t-esc="o.start_date"></span>
+                                    </td>
+                                    <td>
+                                        <span t-esc="o.end_date"></span>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+                </t>
+            </t>
+        </template>
+
+        <!--        CATEGORY Template -->
+        <template id="dynamic_report_categories_contract_report">
+            <t t-set="data_report_landscape" t-value="True"/>
+            <t t-call="web.external_layout">
+            <t t-call="web.html_container">
+                <div class="page">
+                <h3 t-esc="n"></h3>
+                <h3>Categories Contracts Report</h3>
+                <br/>
+                <div>
+                    <table class="table table-condensed table-bordered" style="width: 30%;">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="category_count" t-as="c">
+                                <tr>
+                                    <td>
+                                        <span t-esc="c"></span>
+                                    </td>
+                                    <td>
+                                        <span t-esc="category_count[c]"></span>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                    <br/>
+                    <table class="table table-condensed table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Partner</th>
+                                <th>Amount Lek excluding TVSH</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Categories</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="docs" t-as="o">
+                                <tr>
+                                    <td>
+                                        <span t-esc="o.name"></span>
+                                    </td>
+                                    <td>
+                                        <span t-esc="o.partner_id.name"></span>
+                                    </td>
+                                    <td>
+                                        <span t-esc="o.amount_no_tvsh_lek"></span>
+                                    </td>
+                                    <td>
+                                        <span t-esc="o.start_date"></span>
+                                    </td>
+                                    <td>
+                                        <span t-esc="o.end_date"></span>
+                                    </td>
+
+                                    <td>
+                                        <t t-foreach="enumerate(o.category_ids)" t-as="c">
+                                            <span t-esc="str(c[0] + 1) + '. '"/>
+                                            <span t-esc="c[1].name"/><br/>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+                </t>
+            </t>
+        </template>
+
+        <!--        PERFORMANCE Template -->
+        <template id="dynamic_report_performance_contract_report">
+            <t t-set="data_report_landscape" t-value="True"/>
+<!--            <t t-set="full_width" t-value="True"/>-->
+            <t t-call="web.external_layout">
+            <t t-call="web.html_container">
+                <div class="page">
+                <h3 t-esc="n"></h3>
+                <h3>Performance Contracts Report</h3>
+                <br/>
+                <div>
+                    <table class="table table-condensed table-bordered" style="width: 30%;">
+                        <thead>
+                            <tr>
+                                <th>Performance</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="performance_count" t-as="p">
+                                <tr>
+                                    <td>
+                                        <span t-esc="p"></span>
+                                    </td>
+                                    <td>
+                                        <span t-esc="performance_count[p]"></span>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                    <br/>
+                    <table class="table table-condensed table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Partner</th>
+                                <th>Amount Lek excluding TVSH</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Performance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="docs" t-as="o">
+                                <tr>
+                                    <td>
+                                        <span t-esc="o.name"></span>
+                                    </td>
+                                    <td>
+                                        <span t-esc="o.partner_id.name"></span>
+                                    </td>
+                                    <td>
+                                        <span t-esc="o.amount_no_tvsh_lek"></span>
+                                    </td>
+                                    <td>
+                                        <span t-esc="o.start_date"></span>
+                                    </td>
+                                    <td>
+                                        <span t-esc="o.end_date"></span>
+                                    </td>
+                                    <td>
+                                        <span t-esc="o.contract_performance_id.name"></span>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

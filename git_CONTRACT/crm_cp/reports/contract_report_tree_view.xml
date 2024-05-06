@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+<!-- ############################################################      TREE VIEWS      ########################################################################## -->
+
+        <!--        BUSINESS contract report tree view-->
+        <record id="company_contract_report_business_tree_view" model="ir.ui.view">
+            <field name="name">company.contract.business.tree</field>
+            <field name="model">cp.company_contract</field>
+            <field name="arch" type="xml">
+                <tree string="Business Contracts Report" default_order="start_date desc">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="amount_no_tvsh_lek"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--        GOVERNMENT contract report tree view-->
+        <record id="company_contract_report_government_tree_view" model="ir.ui.view">
+            <field name="name">company.contract.government.tree</field>
+            <field name="model">cp.company_contract</field>
+            <field name="arch" type="xml">
+                <tree string="Government Contracts Report" default_order="start_date desc">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="amount_no_tvsh_lek"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--        SALES contract report tree view-->
+        <record id="company_contract_report_sales_tree_view" model="ir.ui.view">
+            <field name="name">company.contract.sales.tree</field>
+            <field name="model">cp.company_contract</field>
+            <field name="arch" type="xml">
+                <tree string="Sales Contracts Report" default_order="start_date desc">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="amount_no_tvsh_lek"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--        PURCHASE contract report tree view-->
+        <record id="company_contract_report_purchase_tree_view" model="ir.ui.view">
+            <field name="name">company.contract.purchase.tree</field>
+            <field name="model">cp.company_contract</field>
+            <field name="arch" type="xml">
+                <tree string="Purchase Contracts Report" default_order="start_date desc">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="amount_no_tvsh_lek"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--        CATEGORY contract report tree view-->
+        <record id="company_contract_report_categories_tree_view" model="ir.ui.view">
+            <field name="name">company.contract.categories.tree</field>
+            <field name="model">cp.company_contract</field>
+            <field name="arch" type="xml">
+                <tree string="Contracts by Categories Report" default_order="start_date desc">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="amount_no_tvsh_lek"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="category_ids" widget="many2many_tags"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--        PERFORMANCE contract report tree view-->
+        <record id="company_contract_report_performance_tree_view" model="ir.ui.view">
+            <field name="name">company.contract.performance.tree</field>
+            <field name="model">cp.company_contract</field>
+            <field name="arch" type="xml">
+                <tree string="Contracts by Performance Report" default_order="start_date desc">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="amount_no_tvsh_lek"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="contract_performance_id"/>
+                </tree>
+            </field>
+        </record>
+
+<!-- ############################################################      ACTIONS      ########################################################################## -->
+
+        <!--        BUSINESS contract report action-->
+        <record id="company_contract_business_report_act_window_action" model="ir.actions.act_window">
+            <field name="name">Business Reports</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cp.company_contract</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="company_contract_report_business_tree_view"/>
+            <field name="domain">[('subtype', '=', 'business')]</field>
+            <field name="context">{
+                    'create': False,
+                    'default_subtype': 'business'
+            }</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new Report.
+                </p>
+            </field>
+        </record>
+
+        <!--        GOVERNMENT contract report action-->
+        <record id="company_contract_government_report_act_window_action" model="ir.actions.act_window">
+            <field name="name">Government Reports</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cp.company_contract</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="company_contract_report_government_tree_view"/>
+            <field name="domain">[('subtype', '=', 'government_institution')]</field>
+            <field name="context">{
+                    'create': False,
+                    'default_subtype': 'government_institution'
+            }</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new Report.
+                </p>
+            </field>
+        </record>
+
+        <!--        SALES contract report action-->
+        <record id="company_contract_sales_report_act_window_action" model="ir.actions.act_window">
+            <field name="name">Sales Reports</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cp.company_contract</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="company_contract_report_sales_tree_view"/>
+            <field name="domain">[('type', '=', 'sales')]</field>
+            <field name="context">{
+                    'create': False,
+                    'default_subtype': 'business'
+            }</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new Report.
+                </p>
+            </field>
+        </record>
+
+        <!--        PURCHASE contract report action-->
+        <record id="company_contract_purchase_report_act_window_action" model="ir.actions.act_window">
+            <field name="name">Purchase Reports</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cp.company_contract</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="company_contract_report_purchase_tree_view"/>
+            <field name="domain">[('type', '=', 'purchase')]</field>
+            <field name="context">{
+                    'create': False,
+                    'default_subtype': 'business'
+            }</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new Report.
+                </p>
+            </field>
+        </record>
+
+        <!--        CATEGORY contract report action-->
+        <record id="company_contract_categories_report_act_window_action" model="ir.actions.act_window">
+            <field name="name">Contracts by Categories Reports</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cp.company_contract</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="company_contract_report_categories_tree_view"/>
+            <field name="domain">[('category_ids', '!=', False)]</field>
+            <field name="context">{
+                    'create': False
+            }</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new Report.
+                </p>
+            </field>
+        </record>
+
+        <!--        PERFORMANCE contract report action-->
+        <record id="company_contract_performance_report_act_window_action" model="ir.actions.act_window">
+            <field name="name">Contracts by Performance Reports</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cp.company_contract</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="company_contract_report_performance_tree_view"/>
+            <field name="domain">[('contract_performance_id', '!=', False)]</field>
+            <field name="context">{
+                    'create': False
+            }</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new Report.
+                </p>
+            </field>
+        </record>
+
+<!-- #########################################################      MENU-s       ############################################################################## -->
+
+        <!--        MAIN Company Contract Reports Menu-->
+        <menuitem id="menu_company_contract_reports_all"
+                  name="Reports"
+                  parent="company_contracts_root_menu"
+                  groups="hr.group_hr_manager,crm_cp.group_cp_company_contract_admin"/>
+
+        <!--        BUSINESS Company Contract Report Menu-->
+        <menuitem id="menu_dynamic_business_contract_report"
+                  name="Business Report"
+                  parent="menu_company_contract_reports_all"
+                  action="company_contract_business_report_act_window_action"/>
+
+        <!--        GOVERNMENT Company Contract Report Menu-->
+        <menuitem id="menu_dynamic_government_contract_report"
+                  name="Government Report"
+                  parent="menu_company_contract_reports_all"
+                  action="company_contract_government_report_act_window_action"/>
+
+        <!--        SALES Company Contract Report Menu-->
+        <menuitem id="menu_dynamic_sales_contract_report"
+                  name="Sales Report"
+                  parent="menu_company_contract_reports_all"
+                  action="company_contract_sales_report_act_window_action"/>
+
+        <!--        PURCHASE Company Contract Report Menu-->
+        <menuitem id="menu_dynamic_purchase_contract_report"
+                  name="Purchase Report"
+                  parent="menu_company_contract_reports_all"
+                  action="company_contract_purchase_report_act_window_action"/>
+
+        <!--        CATEGORY Company Contract Report Menu-->
+        <menuitem id="menu_dynamic_categories_contract_report"
+                  name="Categories Report"
+                  parent="menu_company_contract_reports_all"
+                  action="company_contract_categories_report_act_window_action"/>
+
+        <!--        PERFORMANCE Company Contract Report Menu-->
+        <menuitem id="menu_dynamic_performance_contract_report"
+                  name="Performance Report"
+                  parent="menu_company_contract_reports_all"
+                  action="company_contract_performance_report_act_window_action"/>
+
+    </data>
+</odoo>

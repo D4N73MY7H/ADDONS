@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="company_contract_cp_form_view" model="ir.ui.view">
+            <field name="name">cp_company_contract.company_contract.form</field>
+            <field name="model">cp.company_contract</field>
+            <field name="arch" type="xml">
+                <form string="Kontrata">
+                    <header>
+                        <field name="state_id" widget="statusbar" nolabel="1" options="{'clickable': '1'}"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                            <button name="action_create_contract_appendix"
+                                    confirm="Konfirmo krijimin e nje aneksi te ri"
+                                    type="object"
+                                    icon="fa-plus">
+                                <span>Krijo Aneks</span>
+                            </button>
+<!--                            <button name="action_get_documents_view"-->
+<!--                                    type="object"-->
+<!--                                    icon="fa-file">-->
+<!--                                <span>Documents</span>-->
+<!--                            </button>-->
+                            <button name="action_get_projects_view"
+                                    type="object"
+                                    icon="fa-puzzle-piece">
+                                <field name="projects_total" nolabel="1"/>
+                                <span>Projekte</span>
+                            </button>
+                            <button class="oe_stat_button" type="object"
+                                    name="action_get_sale_orders_view"
+                                    icon="fa-book">
+                                <field name="sales_order_total" nolabel="1"/>
+                                <span>Sale Orders</span>
+                            </button>
+                            <button class="oe_stat_button" type="object"
+                                    name="action_dummy_get_contract_users"
+                                    icon="fa-users"
+                                    attrs="{'readonly': True}">
+                                <field name="contract_users_total" nolabel="1"/>
+                                <span>Perdorues</span>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Name" nolabel="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="active" invisible="1"/>
+                                <field name="parent_contract_id"/>
+                                <field name="contract_appendix_id" widget="related_field"/>
+                            </group>
+                            <group></group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="type"/>
+                                <field name="subtype" attrs="{'invisible': [('type', '!=', 'sales')]}"/>
+                                <field name="object_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                                <field name="component_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                            </group>
+                            <group>
+                                <field name="category_ids" widget="many2many_tags"/>
+                                <field name="has_maintenance_category" invisible="1"/>
+                                <field name="sla_id"
+                                       attrs="{'invisible': [('has_maintenance_category', '!=', 'maintenance')]}"/>
+                                <field name="contract_hours"
+                                       attrs="{'invisible': [('has_maintenance_category', '!=', 'maintenance')]}"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <group col="2" colspan="2">
+                                    <field name="ref_no"/>
+                                    <field name="ref_no_cp"/>
+                                    <field name="timeframe"/>
+                                </group>
+                                <group col="4" colspan="2">
+                                    <field name="renewal_timeframe" attrs="{'invisible': [('timeframe', '!=', 'renewable_fixed_term')]}"/>
+                                    <field name="renewal_unit" attrs="{'invisible': [('timeframe', '!=', 'renewable_fixed_term')]}"/>
+
+                                    <field name="notification_timeframe" attrs="{'invisible': [('timeframe', '=', 'unlimited_form')]}"/>
+                                    <field name="notification_unit" attrs="{'invisible': [('timeframe', '=', 'unlimited_form')]}"/>
+                                </group>
+                            </group>
+                            <group>
+                                <group col="2" colspan="2">
+                                    <field name="start_date"/>
+                                    <field name="sign_date"/>
+                                    <field name="renewal_date" attrs="{'invisible': [('timeframe', '!=', 'renewable_fixed_term')]}"/>
+                                    <field name="end_date" attrs="{'invisible': [('timeframe', '=', 'unlimited_form')]}"/>
+                                </group>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="currency_id"/>
+                                <field name="currency_symbol" invisible="1"/>
+                                <field name="rate"
+                                       attrs="{'invisible': [('currency_symbol', '=', 'ALL')]}"/>
+                                <field name="amount_no_tvsh_currency"/>
+<!--                                       attrs="{'invisible': [('currency_symbol', '=', 'ALL')]}"/>-->
+                                <field name="amount_with_tvsh_currency"/>
+<!--                                       attrs="{'invisible': [('currency_symbol', '=', 'ALL')]}"/>-->
+                                <field name="total_maintenance_amount_no_tvsh"/>
+                                <field name="periodic_maintenance_amount_no_tvsh"/>
+                            </group>
+                            <group>
+                                <field name="amount_no_tvsh_lek" attrs="{'invisible': [('currency_symbol', '=', 'ALL')]}"/>
+                                <field name="amount_with_tvsh_lek" attrs="{'invisible': [('currency_symbol', '=', 'ALL')]}"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="responsible_persona"/>
+                                <field name="partner_penalty"/>
+                                <field name="partner_id"/>
+                                <field name="opportunity"/>
+                                <field name="responsible_client"/>
+                                <field name="client_id_email"/>
+                                <field name="client_id_phone"/>
+                            </group>
+                            <group>
+                                <field name="contract_manager_id"/>
+                                <field name="company_penalty"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="contract_performance_id"/>
+                            </group>
+                            <group></group>
+                        </group>
+                        <notebook>
+                            <page name="company_contract_phases" string="Contract's Phases">
+                                <form>
+                                    <group>
+                                        <group>
+                                            <strong>Implementation</strong>
+                                            <field name="implementation_start_date"/>
+                                            <field name="implementation_end_date"/>
+                                        </group>
+                                        <group>
+                                            <strong>Warranty</strong>
+                                            <field name="warranty_start_date"/>
+                                            <field name="warranty_end_date"/>
+                                        </group>
+                                        <group>
+                                            <strong>Maintenance</strong>
+                                            <field name="maintenance_start_date"/>
+                                            <field name="maintenance_end_date"/>
+                                        </group>
+                                    </group>
+                                </form>
+                            </page>
+                            <page name="document_ids" string="Attachments">
+                                <field name="document_ids">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="document" widget="binary"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="company_contract_deliveries" string="Deliveries">
+                                <!--                                Ketu duhet te jene Dorezimet, duhet sqaruar si do behet , nga do vijne te dhenat -->
+                                <!--                                Nese jane shume te dhena duhet krijuar tabele me vete sepse 1 fushe nuk i mban -->
+                            </page>
+                            <page name="company_contract_users" string="Users">
+                                <field name="contract_user_ids">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="work_email"/>
+                                        <field name="mobile_phone"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="company_contract_comments" string="Notes">
+                                <field name="comments"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="cp_company_contract_kanban_view" model="ir.ui.view">
+            <field name="name">cp.company_contract.kanban</field>
+            <field name="model">cp.company_contract</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="state_id">
+                    <field name="name"/>
+                    <field name="type"/>
+                    <field name="partner_id"/>
+                    <field name="state_id"/>
+                    <field name="amount_no_tvsh_lek"/>
+                    <field name="amount_with_tvsh_lek"/>
+                    <progressbar field="state"
+                                 colors='{"active": "success", "suspended": "warning", "discontinued": "danger", "finished": "success"}'
+                                 sum_field="amount_with_tvsh_lek"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="o_kanban_card oe_kanban_global_click">
+                                <div class="o_kanban_record_content">
+                                        <h3><field name="name"/></h3><br/>
+                                        <strong><span style="color: #714b67;">Tipi: </span></strong><field name="type"/><br/>
+                                        <strong><span style="color: #714b67;">Partneri: </span></strong><field name="partner_id"/><br/>
+                                        <strong><span style="color: #714b67;">Vlera pa TVSH (Lek): </span></strong><field name="amount_no_tvsh_lek"/><br/>
+                                        <strong>
+                                            <span style="color: #714b67;">Date Fillimi/Mbarimi: </span>
+                                        </strong>
+                                        <field name="start_date"/>
+                                        <span attrs="{'invisible': [('start_date', '=', False), ('end_date', '=', False)]}"> - </span>
+                                        <field name="end_date"/>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="company_contract_cp_tree_view" model="ir.ui.view">
+            <field name="name">cp_company_contract.company_contract.tree</field>
+            <field name="model">cp.company_contract</field>
+            <field name="arch" type="xml">
+                <tree string="Kontrata">
+                    <field name="ref_no_cp"/>
+                    <field name="partner_id"/>
+                    <field name="name"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="amount_no_tvsh_lek"/>
+                    <field name="state_id_code" invisible="1"/>
+                    <field name="state_id"
+                           widget="badge"
+                           decoration-success="state_id_code == 'finished'"
+                           decoration-info="state_id_code in ['draft', 'active', 'maintenance', 'warranty']"
+                           decoration-warning="state_id_code == 'suspended'"
+                           decoration-danger="state_id_code == 'discontinued'"/>
+                    <field name="contract_performance_id"/>
+                    <field name="project_ids" widget="many2many_tags"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="company_contract_cp_search_view" model="ir.ui.view">
+            <field name="name">cp_company_contract.company_contract.search</field>
+            <field name="model">cp.company_contract</field>
+            <field name="arch" type="xml">
+                <search string="Kontrata">
+                    <field name="name"/>
+                    <field name="state_id"/>
+                    <field name="category_ids"/>
+                    <field name="contract_performance_id"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="company_contract_cp_documents_form_view" model="ir.ui.view">
+            <field name="name">cp_company_contract.company_contract_document.form</field>
+            <field name="model">cp.company_contract</field>
+            <field name="arch" type="xml">
+                <form string="Document">
+                    <field name="name"/>
+                    <notebook>
+                            <page name="company_contract_documents" string="Documents">
+                                <field name="document_ids">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="document" filename="name"/>
+                                    </tree>
+                                </field>
+                            </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+
+        <record id="company_contract_cp_act_window" model="ir.actions.act_window">
+            <field name="name">Kontratat</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cp.company_contract</field>
+            <field name="view_mode">kanban,tree,dashboard,form</field>
+            <field name="view_id" ref="cp_company_contract_kanban_view"/>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'kanban', 'view_id': ref('cp_company_contract_kanban_view')}),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('company_contract_cp_tree_view')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('company_contract_cp_form_view')})]"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new Kontrate.
+                </p>
+            </field>
+        </record>
+
+        <menuitem name="Contracts" id="company_contracts_root_menu" web_icon="crm_cp,static/description/contract4.jpg"
+                  sequence="999"
+                  groups="crm_cp.group_cp_company_contract_users_from_panel,crm_cp.group_cp_company_contract_admin,crm_cp.group_cp_company_contract_user"/>
+        <menuitem name="Contract" id="company_contracts_test_menu" parent="company_contracts_root_menu"
+                  action="company_contract_cp_act_window"/>
+
+    </data>
+</odoo>

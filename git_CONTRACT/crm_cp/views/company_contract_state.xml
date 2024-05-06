@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="company_contract_state_cp_form_view" model="ir.ui.view">
+            <field name="name">cp_company_contract_state.company_contract_state.form</field>
+            <field name="model">cp.company_contract_state</field>
+            <field name="arch" type="xml">
+                <form string="State">
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="company_contract_state_cp_tree_view" model="ir.ui.view">
+            <field name="name">cp_company_contract_state.company_contract_state.tree</field>
+            <field name="model">cp.company_contract_state</field>
+            <field name="arch" type="xml">
+                <tree string="State">
+                    <field name="name"/>
+                    <field name="code"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="company_contract_state_cp_search_view" model="ir.ui.view">
+            <field name="name">cp_company_contract_state.company_contract_state.search</field>
+            <field name="model">cp.company_contract_state</field>
+            <field name="arch" type="xml">
+                <search string="State">
+                    <field name="name"/>
+                    <field name="code"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="company_contract_state_cp_act_window_action" model="ir.actions.act_window">
+            <field name="name">Statet</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cp.company_contract_state</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new State.
+                </p>
+            </field>
+        </record>
+
+        <menuitem name="State" id="company_contracts_state_menu"
+                  parent="company_contracts_configuration_menu"
+                  action="company_contract_state_cp_act_window_action"/>
+
+    </data>
+</odoo>

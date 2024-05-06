@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!--        Actions for project tasks button-->
+        <record id="cp_project_tasks_button_act_window" model="ir.actions.act_window">
+            <field name="name">Tasks</field>
+            <field name="res_model">project.task</field>
+            <field name="view_mode">kanban,tree,form,calendar,pivot,graph,activity</field>
+            <field name="domain">[('display_project_id', '=', active_id), ('type', '=', 'task')]</field>
+            <field name="context">{
+                'pivot_row_groupby': ['user_ids'],
+                'default_project_id': active_id,
+                'show_project_update': True,
+            }</field>
+            <field name="search_view_id" ref="project.view_task_search_form"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No tasks found. Let's create one!
+                </p>
+            </field>
+        </record>
+
+        <!--        Actions for project tickets button(not helpdesk tickets)-->
+        <record id="cp_project_tickets_button_act_window" model="ir.actions.act_window">
+            <field name="name">Tasks</field>
+            <field name="res_model">project.task</field>
+            <field name="view_mode">kanban,tree,form,calendar,pivot,graph,activity</field>
+            <field name="domain">[('display_project_id', '=', active_id), ('type', '=', 'ticket')]</field>
+            <field name="context">{
+                'pivot_row_groupby': ['user_ids'],
+                'default_project_id': active_id,
+                'show_project_update': True,
+            }</field>
+            <field name="search_view_id" ref="project.view_task_search_form"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No tasks found. Let's create one!
+                </p>
+            </field>
+        </record>
+
+        <record id="crm_cp_view_project_extend" model="ir.ui.view">
+            <field name="name">cp.crm.view.project.extend</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//div[@class='oe_button_box']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//div[@class='oe_button_box']" position="after">
+                    <div id="top_buttons_div" class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button"
+                                name="%(project_cp.cp_project_feedback_action)d"
+                                type="action" icon="fa-comments"
+                                string="Feedback"
+                                groups="!project.group_project_manager,!project_cp.group_project_officer">
+                        </button>
+                        <button class="oe_stat_button"
+                                name="%(project_cp.cp_project_team_roles_action)d"
+                                type="action" icon="fa-users"
+                                string="Team"
+                                groups="!project.group_project_manager,!project_cp.group_project_officer">
+                        </button>
+
+                        <button class="oe_stat_button" name="open_attachments_view" type="object" icon="fa-files-o">
+                            <field string="Documents" name="doc_count" widget="statinfo"/>
+                        </button>
+                        <button class="oe_stat_button" name="project_cp.action_cp_project_milestone_parent"
+                                type="action" icon="fa-check-square-o"
+                                groups="project.group_project_manager">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_value">
+                                    <field name="management_milestone_count" nolabel="1"/>
+                                </span>
+                                <span class="o_stat_text">
+                                    Milestones
+                                </span>
+                            </div>
+                        </button>
+                        <button class="oe_stat_button" name="project_cp.action_cp_project_milestone_children"
+                                type="action" icon="fa-check-square-o"
+                        >
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_value">
+                                    <field name="milestone_count" nolabel="1"/>
+                                </span>
+                                <span class="o_stat_text">
+                                    Sprints
+                                </span>
+                            </div>
+                        </button>
+                        <button
+                                class="oe_stat_button"
+                                type="object"
+                                name="action_open_project_tickets"
+                                context="{'search_default_project_id': [active_id], 'default_project_id': active_id}"
+                                icon="fa-life-ring"
+                                attrs="{'invisible': [('ticket_count', '=', 0)]}">
+                            <field name="ticket_count" string="Helpdesk Tickets" widget="statinfo"/>
+                        </button>
+                        <button class="oe_stat_button" type="action"
+                                name="%(crm_cp.cp_project_tasks_button_act_window)d" icon="fa-tasks">
+                            <field string="Tasks In Progress" name="task_count" widget="statinfo"
+                                   options="{'label_field': 'label_tasks'}"/>
+                        </button>
+                        <button class="oe_stat_button" type="action"
+                                name="%(crm_cp.cp_project_tickets_button_act_window)d" icon="fa-ticket">
+                            <field string="Tickets" name="project_ticket_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <div id="bottom_buttons_div" class="oe_button_box" name="button_box">
+                        <button class="d-none d-md-inline oe_stat_button"
+                                type="object" name="show_so_of_project" icon="fa-dollar"
+                                attrs="{'invisible': [('sale_order_connected_with_project', '=', False)]}"
+                                string="Sale Order">
+                        </button>
+                        <button class="oe_stat_button" name="action_show_timesheets_by_employee_invoice_type"
+                                type="object" icon="fa-clock-o"
+                                attrs="{'invisible': [('allow_timesheets', '=', False)]}"
+                                groups="hr_timesheet.group_hr_timesheet_user">
+                            <div class="o_field_widget o_stat_info">
+                                <div class="oe_inline">
+                                    <span class="o_stat_value mr-1">
+                                        <field name="total_timesheet_time" widget="statinfo" nolabel="1"/>
+                                    </span>
+                                    <span class="o_stat_value">
+                                        <field name="timesheet_encode_uom_id" class="o_stat_text"
+                                               options="{'no_open' : True}"/>
+                                    </span>
+                                </div>
+                                <span class="o_stat_text">Recorded</span>
+                            </div>
+                        </button>
+                        <!--                        <button class="oe_stat_button" name="action_project_forecast_from_project"-->
+                        <!--                                type="object" icon="fa-tasks" help="Forecasts">-->
+                        <!--&lt;!&ndash;                                attrs="{'invisible': [('allow_forecast', '=', False)]}">&ndash;&gt;-->
+                        <!--                            <div class="o_stat_info">-->
+                        <!--                                <div class="oe_inline">-->
+                        <!--                                    <span class="o_stat_value mr-1">-->
+                        <!--                                        <field name="total_forecast_time" widget="statinfo" nolabel="1"/>-->
+                        <!--                                    </span>-->
+                        <!--                                    <span class="o_stat_value">Hours</span>-->
+                        <!--                                </div>-->
+                        <!--                                <span class="o_stat_text">Forecast</span>-->
+                        <!--                            </div>-->
+                        <!--                        </button>-->
+                        <button name="%(project.action_project_task_burndown_chart_report)d" type="action"
+                                class="oe_stat_button" icon="fa-area-chart" groups="project.group_project_manager" invisible="1">
+                            <span class="o_stat_text">
+                                Burndown Chart
+                            </span>
+                        </button>
+<!--                        <field name="display_planning_timesheet_analysis" invisible="1"/>-->
+<!--                        <button name="open_timesheets_planning_report" type="object" class="oe_stat_button"-->
+<!--                                icon="fa-clock-o"-->
+<!--                                attrs="{'invisible': [('display_planning_timesheet_analysis', '=', False)]}"-->
+<!--                                invisible="1">-->
+<!--                            <span class="o_stat_text">-->
+<!--                                Timesheets and Planning-->
+<!--                            </span>-->
+<!--                        </button>                        -->
+                        <button name="open_timesheets_planning_report" type="object" class="oe_stat_button"
+                                icon="fa-clock-o"
+                                invisible="1">
+                            <span class="o_stat_text">
+                                Timesheets and Planning
+                            </span>
+                        </button>
+                        <button class="oe_stat_button" type="object" name="action_view_analytic_account_entries"
+                                icon="fa-usd" attrs="{'invisible': [('analytic_account_id', '=', False)]}"
+                                groups="analytic.group_analytic_accounting">
+                            <div class="o_form_field o_stat_info">
+                                <span class="o_stat_value">
+                                    <field name="analytic_account_balance"/>
+                                </span>
+                                <span class="o_stat_text">Gross Margin</span>
+                            </div>
+                        </button>
+                        <button name="toggle_active"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-archive"
+                                attrs="{'invisible': [('active', '=', True)]}">
+                            <strong><span style="color:#800000">Archived</span></strong>
+                        </button>
+                        <button name="toggle_inactive"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-archive"
+                                attrs="{'invisible': [('active', '=', False)]}">
+                            <strong><span style="color:#228b22">Active</span></strong>
+                        </button>
+                    </div>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="company_contract_project_form_inherit" model="ir.ui.view">
+            <field name="name">project.project.form.inherit</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project_cp.new_cp_view_project_extend"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='partner_id']/parent::node()/parent::node()" position="before">
+                    <group>
+                        <group>
+                            <strong>
+                                <p>Planned Dates</p>
+                            </strong>
+                            <br/>
+                            <field name="date_start" string="Start"/>
+                            <field name="date" string="End"/>
+                        </group>
+                        <group>
+                            <strong>
+                                <p>Contract Dates</p>
+                            </strong>
+                            <br/>
+                            <field name="contract_start" string="Start" readonly="1"/>
+                            <field name="contract_end" string="End" readonly="1"/>
+                            <div name="contract_state_info" class="o_row">
+                                <field name="contract_state" invisible="1" nolabel="1"/>
+                                <span class="fa fa-exclamation-triangle"
+                                      attrs="{'invisible': [('contract_state', '=', False)]}">
+                                </span>
+                                <span attrs="{'invisible': [('contract_state', '=', False)]}"
+                                      style="color: white; background-color: #E76161;">Contract Has Ended
+                                </span>
+                                <span class="fa fa-exclamation-triangle"
+                                      attrs="{'invisible': [('contract_state', '=', False)]}">
+                                </span>
+                            </div>
+                        </group>
+                    </group>
+                    <br/>
+                    <br/>
+                    <br/>
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="before">
+                    <field name="company_contract_id"/>
+                    <field name="sla_id"/>
+                </xpath>
+                <xpath expr="//page[@name='team']" position="after">
+                    <page name="project_phases" string="Phases">
+                        <form>
+                            <h2>Phases</h2>
+                            <group>
+                                <group>
+                                    <strong>Implementation</strong>
+                                    <field name="implementation_start" readonly="1"/>
+                                    <field name="implementation_end" readonly="1"/>
+                                </group>
+                                <group>
+                                    <strong>Maintenance</strong>
+                                    <field name="maintenance_start" readonly="1"/>
+                                    <field name="maintenance_end" readonly="1"/>
+                                </group>
+                            </group>
+                            <notebook>
+                                <!--                                <page name="type_ids" string="Project Phases">-->
+                                <!--                                    <field name="type_ids">-->
+                                <!--                                        <tree name="type_ids" editable="bottom">-->
+                                <!--                                            <field name="name"/>-->
+                                <!--                                            <field name="sequence"/>-->
+                                <!--                                        </tree>-->
+                                <!--                                    </field>-->
+                                <!--                                </page>                                -->
+                                <page name="cp_stage_ids" string="Project Phases">
+                                    <field name="cp_stage_ids">
+                                        <tree name="cp_stage_ids" editable="bottom" default_order="sequence asc">
+                                            <field name="name"/>
+                                            <field name="sequence"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                            </notebook>
+                        </form>
+                    </page>
+                    <page name="project_deliveries" string="Deliveries">
+                        <form>
+                            <h2>Deliveries</h2><br/>
+                            <field name="deliveries_ids" context="{'default_project_id': id}">
+<!--                                <tree decoration-success="state == 'konfirmuar'">-->
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="delivery_lines" widget="many2many_tags"/>
+                                    <field name="date"/>
+                                    <field name="notes"/>
+                                    <field name="state"/>
+                                    <field name="project_id" invisible="1"/>
+                                    <button name="edit_delivery_act" type="object" string="Shto zëra" groups="project.group_project_manager" attrs="{'invisible': [('state', '=', 'konfirmuar')]}"/>
+                                </tree>
+                            </field>
+                        </form>
+                    </page>
+                    <page name="feedback_ids" string="Feedbacks" groups="project.group_project_manager,project_cp.group_project_officer">
+                        <field name="feedback_ids">
+                            <h2>Feedbacks</h2>
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="skill"/>
+                                <field name="confirmed_from"/>
+                                <field name="confirmed"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <!--                    <page name="document_ids" string="Attachments">-->
+                    <!--                        <field name="document_ids">-->
+                    <!--                            <tree editable="bottom">-->
+                    <!--                                <field name="name"/>-->
+                    <!--                                <field name="document" widget="binary"/>-->
+                    <!--                                <field name="create_uid"/>-->
+                    <!--                                <field name="create_date"/>-->
+                    <!--                                <field name="origin"/>-->
+                    <!--                                <field name="origin_name"/>-->
+                    <!--                            </tree>-->
+                    <!--                        </field>-->
+                    <!--                    </page>-->
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

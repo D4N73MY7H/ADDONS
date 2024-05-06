@@ -1,0 +1,264 @@
+<odoo>
+
+    <record id="view_crm_stage_form_extend" model="ir.ui.view">
+        <field name="name">crm.stage.form.inherit</field>
+        <field name="model">crm.stage</field>
+        <field name="inherit_id" ref="crm.crm_stage_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='is_won']" position="before">
+                <field name="code"/>
+            </xpath>
+        </field>
+    </record>
+
+  <record id="view_form_crm_lead_extend" model="ir.ui.view">
+    <field name="name">crm.lead.inherit</field>
+    <field name="model">crm.lead</field>
+    <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+    <field name="arch" type="xml">
+
+
+      <!--   Shfaqja e butonit per popupin e ekipit   -->
+      <field name="team_id" position="replace">
+        <field name="team_id" options="{'no_open': False, 'no_create': True}"/>
+      </field>
+
+      <xpath expr="//field[@name='tag_ids']" position="replace"/>
+
+      <xpath expr="//button[@name='action_schedule_meeting']" position="before">
+          <button class="oe_stat_button"
+                  name="action_get_company_contract"
+                  icon="fa-file-text-o"
+                  type="object"
+                  attrs="{'invisible': [('stage_id_code', '!=', 'won')]}">
+              <span>Contract</span>
+          </button>
+          <button class="oe_stat_button"
+                  name="action_create_project_from_crm"
+                  icon="fa-plus"
+                  type="object"
+                  attrs="{'invisible': [('stage_id_code', '=', 'new')]}">
+              <span>Contract</span>
+          </button>
+      </xpath>
+
+      <!--   Zevendesimi i nje seksioni ekzituese me xpath   -->
+      <xpath expr="//h2[@class='o_row no-gutters align-items-end']" position="replace">
+        <div>
+          <h2 class="o_row no-gutters align-items-end">
+            <div class="col">
+              <label for="expected_revenue" class="oe_edit_only" />
+              <div class="o_row">
+                <field name="company_currency" invisible="1"/>
+                <field name="expected_revenue" class="oe_inline" widget="monetary" options="{'currency_field': 'company_currency'}"/>
+                <span class="oe_grey p-2" groups="crm.group_use_recurring_revenues"> + </span>
+                <span class="oe_grey p-2" groups="!crm.group_use_recurring_revenues"> at </span>
+              </div>
+            </div>
+            <div class="col" >
+              <label for="recurring_revenue" class="oe_edit_only" />
+              <div class="o_row">
+                <field name="recurring_revenue" class="oe_inline" widget="monetary" options="{'currency_field': 'company_currency'}"/>
+              </div>
+            </div>
+            <div class="col" attrs="{'invisible': [('recurring_revenue', '=', 0)]}">
+              <label for="recurring_plan" class="oe_edit_only" />
+              <div class="o_row">
+                <field name="recurring_plan" class="oe_inline" attrs="{'required': [('recurring_revenue', '!=', 0)]}" placeholder="E.g. Monthly"  options="{'no_create': True, 'no_open': True}"/>
+              </div>
+            </div>
+            <div class="col" invisible="1">
+              <label for="probability" class="oe_edit_only" />
+              <div id="probability" class="o_row d-flex" >
+                <span class="oe_grey p-2"> at </span>
+                <field name="probability" widget="float" class="oe_inline"/>
+                <span class="oe_grey"> %</span>
+              </div>
+            </div>
+          </h2>
+        </div>
+        <div>
+          <h2 class="o_row no-gutters align-items-end">
+            <div class="col">
+              <label for="selected_currency_id" class="oe_edit_only" />
+              <field name="selected_currency_id" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True}"/>
+            </div>
+            <div class="col">
+              <label for="second_currency_rate" class="oe_edit_only" />
+              <field name="second_currency_rate"/>
+            </div>
+          </h2>
+        </div>
+        <div>
+          <h2 class="o_row no-gutters align-items-end" >
+            <div class="col">
+              <label for="second_expected_revenue" class="oe_edit_only" />
+              <div class="o_row">
+                <field name="second_expected_revenue" class="oe_inline" widget="monetary"/>
+                <span class="oe_grey p-2" groups="crm.group_use_recurring_revenues"> + </span>
+              </div>
+            </div>
+            <div class="col" >
+              <label for="second_recurring_revenue" class="oe_edit_only" />
+              <div class="o_row">
+                <field name="second_recurring_revenue" class="oe_inline" widget="monetary"/>
+              </div>
+            </div>
+          </h2>
+        </div>
+      </xpath>
+      <!--   Shtimi i fushes Tender dhe shtimi i dates se mbylljes  -->
+      <field name="team_id" position="after">
+        <field name="tender_field"/>
+        <field name="date_deadline" attrs="{'invisible': [('type', '=', 'opportunity')],'required':[('type', '=', 'lead')]}"/>
+        <field name="create_date" readonly="1"/>
+      </field>
+        <!--      Fusha e bazes zevendesohet me fushen e re -->
+            <xpath expr="//field[@name='tag_ids']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <field name="priority" position="after">
+                <field name="helpdesk_tag_ids" widget="many2many_tags"/>
+              <field name="stage_id_code" invisible="1"/>
+            </field>
+            <!--      End-->
+      <!--   Shtimi i tabit te datave te tenderit   -->
+      <page name="extra" position="after">
+        <page name="tender" string="Tender's Deadlines" class="o_row no-gutters align-items-end" attrs="{'invisible': [('tender_field', '=', False)]}">
+          <div class="col ">
+            <div class="o_row">
+              <label for="publication_date"/>
+              <field name="publication_date"/>
+              <label for="submission_date"/>
+              <field name="submission_date"/>
+            </div>
+          </div>
+          <div class="col">
+            <div class="o_row">
+              <label for="appeal_date"/>
+              <field name="appeal_date"/>
+              <label for="clarification_date"/>
+              <field name="clarification_date"/>
+            </div>
+          </div>
+        </page>
+      </page>
+      <!--   Objekti dhe pershkrimi   -->
+<!--      <field name="date_deadline" position="before">-->
+<!--        <field name="opportunity_object"/>-->
+<!--        <field name="object_description"/>-->
+<!--      </field>-->
+      <!--     Adding PO window in the form       -->
+      <div name="button_box" position="inside">
+        <button class="d-none d-md-inline oe_stat_button" type="object" name="show_related_po" icon="fa-credit-card" attrs="{'invisible': [('related_po_count', '=', 0)]}">
+          <div class="o_field_widget o_stat_info">
+            <field name="related_po_count"/>
+            <span class="o_stat_text"> Purchase Orders</span>
+          </div>
+        </button>
+      </div>
+      <!--     Adding Project window in the form       -->
+      <div name="button_box" position="inside">
+        <button class="d-none d-md-inline oe_stat_button" type="object" name="show_related_project" icon="fa-puzzle-piece" attrs="{'invisible': [('related_project_count', '=', 0)]}">
+          <div class="o_field_widget o_stat_info">
+            <field name="related_project_count"/>
+            <span class="o_stat_text"> Project</span>
+          </div>
+        </button>
+      </div>
+    </field>
+  </record>
+
+<!--  Modifikimi pamjes tree tek Pipeline(crm.lead)-->
+        <record id="cp_crm_case_tree_view_oppor_tree_inherit" model="ir.ui.view">
+            <field name="name">crm.lead.tree.inherit</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+<!--              They used to be optional, but made them default as per the request then organised positions below-->
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='expected_revenue']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='date_deadline']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='stage_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="replace">
+                    <field name="partner_id"/>
+                </xpath>
+<!--               Organize positions-->
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="name"/>
+                    <field name="stage_id"/>
+                    <field name="expected_revenue"/>
+                    <field name="date_deadline" string="Deadline"/>
+                    <field name="user_id"/>
+                    <field name="sale_amount_total" string="Offered"/>
+                    <field name="albanian_curr_id" invisible="1"/>
+                    <field name="total_so_cost_currency_lek" string="Cost"/>
+                </xpath>
+
+  <!--            They used to be default, but moved them to optional list as per the request-->
+                <xpath expr="//field[@name='email_from']" position="attributes">
+                  <attribute name="optional">hide</attribute>
+                </xpath>
+                <xpath expr="//field[@name='phone']" position="attributes">
+                  <attribute name="optional">hide</attribute>
+                </xpath>
+                <xpath expr="//field[@name='activity_ids']" position="attributes">
+                  <attribute name="optional">hide</attribute>
+                </xpath>
+                <xpath expr="//field[@name='my_activity_date_deadline']" position="attributes">
+                  <attribute name="optional">hide</attribute>
+                </xpath>
+
+<!--                <xpath expr="//button[@name='%(crm_sms.crm_lead_act_window_sms_composer_multi)d']" position="before">-->
+<!--                    <field name="name"/>-->
+<!--                </xpath>-->
+            </field>
+        </record>
+
+    <record id="cp_crm_sms_case_tree_view_oppor_tree_inherit" model="ir.ui.view">
+            <field name="name">crm.lead.tree.inherit</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_sms.crm_case_tree_view_oppor"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='%(crm_sms.crm_lead_act_window_sms_composer_multi)d']" position="replace">
+                    <button name="action_share_whatsapp" string="Whatsapp" icon="fa-whatsapp" type="object"/>
+                </xpath>
+            </field>
+        </record>
+
+  <!-- Arkivimi automatik i rasteve 30 pas dates se mbylljes se pritshme -->
+  <record model="ir.cron" id="check_leads_cron">
+    <field name="name">Check Leads</field>
+    <field name="model_id" ref="model_crm_lead" />
+    <field name="type">ir.action.server</field>
+    <field name="state">code</field>
+    <field name="code">model._check_leads_to_archive()</field>
+    <field name="interval_number">1</field>
+    <field name="interval_type">days</field>
+    <field name="numbercall">-1</field>
+  </record>
+
+  <record id="crm_lead_view_form" model="ir.ui.view">
+        <field name="name">crm.lead.form</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm_helpdesk.crm_lead_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="/form/header//button[last()]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

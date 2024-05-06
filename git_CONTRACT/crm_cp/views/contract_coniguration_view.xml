@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="company_contract_performance_cp_tree_view" model="ir.ui.view">
+            <field name="name">cp_company_contract.company_contract_performance.tree</field>
+            <field name="model">cp.company_contract_performance</field>
+            <field name="arch" type="xml">
+                <tree string="Performanca e Kontrates">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="company_contract_performance_cp_search_view" model="ir.ui.view">
+            <field name="name">cp_company_contract.company_contract_performance.search</field>
+            <field name="model">cp.company_contract_performance</field>
+            <field name="arch" type="xml">
+                <search string="Performanca e Kontrates">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="company_contract_performance_cp_act_window" model="ir.actions.act_window">
+            <field name="name">Performanca e Kontrates</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cp.company_contract_performance</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new Performanca e Kontrates.
+                </p>
+            </field>
+        </record>
+
+        <menuitem name="Configurations"
+                  parent="company_contracts_root_menu"
+                  id="company_contracts_configuration_menu"
+                  groups="hr.group_hr_manager,crm_cp.group_cp_company_contract_admin"/>
+        <menuitem name="Contract's Performance"
+                  id="company_contracts_performance_menu"
+                  parent="company_contracts_configuration_menu"
+                  action="company_contract_performance_cp_act_window"/>
+
+    </data>
+</odoo>

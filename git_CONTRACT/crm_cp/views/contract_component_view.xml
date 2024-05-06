@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="cp_company_contract_component_form_view" model="ir.ui.view">
+            <field name="name">cp_company_contract_component.cp_company_contract_component.form</field>
+            <field name="model">cp.company_contract_component</field>
+            <field name="arch" type="xml">
+                <form string="Components">
+                    <group>
+                        <field name="name"/>
+                        <field name="contract_object_id"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="cp_company_contract_component_tree_view" model="ir.ui.view">
+            <field name="name">cp_company_contract_component.cp_company_contract_component.tree</field>
+            <field name="model">cp.company_contract_component</field>
+            <field name="arch" type="xml">
+                <tree string="Components">
+                    <field name="name"/>
+                    <field name="contract_object_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="cp_company_contract_component_search_view" model="ir.ui.view">
+            <field name="name">cp_company_contract_component.cp_company_contract_component.search</field>
+            <field name="model">cp.company_contract_component</field>
+            <field name="arch" type="xml">
+                <search string="Components">
+                    <field name="name"/>
+                    <field name="contract_object_id"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="cp_company_contract_component_act_window_action" model="ir.actions.act_window">
+            <field name="name">Company Contract Component</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cp.company_contract_component</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new Component.
+                </p>
+            </field>
+        </record>
+
+        <menuitem name="Contract Components" id="company_contracts_components_menu"
+                  parent="company_contracts_configuration_menu"
+                  action="cp_company_contract_component_act_window_action"/>
+
+    </data>
+</odoo>
